@@ -1,0 +1,43 @@
+/* #=#=# WRAPPERS #=#=# */
+/* Section and content wrappers and containers */
+
+@import url('./zen.css');
+
+/* Content wrappers */
+.section-wrap,
+.content-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m);
+  width: 100%;
+}
+
+.section-wrap {
+    gap: var(--v-gap-section);
+    padding: var(--padding-section);
+}
+
+.content-wrap {
+    max-width: var(--max-w-xl);
+    margin: 0 auto;
+}
+
+/* List wrappers */
+.list-wrap,
+.list-wrap-col,
+.list-wrap-row {
+    display: flex;
+    padding: 0px;
+    list-style: none;
+}
+
+.list-wrap,
+.list-wrap-col {
+    flex-direction: column;
+    gap: var(--s);
+}
+
+.list-wrap-row {
+    flex-direction: row;
+    gap: var(--m);
+}

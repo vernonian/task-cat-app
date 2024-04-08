@@ -1,0 +1,37 @@
+/* #=#=# Bento box atom #=#=# */
+/* Includes styling for a simple bento-box style element */
+
+@import url('../zen.css');
+
+.bento {
+  display: flex;
+  flex-direction: column;
+  gap: var(--m);
+  padding: var(--m);
+  color: inherit;
+  background-color: var(--white);
+  border-radius: var(--s);
+}
+
+.bento.primary {
+  color: var(--white);
+  background-color: var(--primary-5);
+}
+
+.bento.secondary {
+  color: var(--white);
+  background-color: var(--secondary-5);
+}
+
+.bento.l,
+.bento.large {
+  gap: var(--l);
+  padding: var(--l);
+}
+
+.bento.s,
+.bento.small {
+  gap: var(--s);
+  padding: var(--s);
+  border-radius: var(--xs);
+}

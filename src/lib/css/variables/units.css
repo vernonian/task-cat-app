@@ -1,0 +1,65 @@
+/* #=#=# VARIABLES #=#=# */
+/* Variable definitions used throughout styling */
+
+:root {
+  /* Spacing Units */
+
+  /* Primitives used for spacing properties like gap, margin, padding, etc. */
+  --xxl: max(8rem, 10vw);
+  --xl:  max(4rem, 5vw);
+  --l:   max(2rem, 2.5vw);
+  --m:   max(1rem, 1.25vw);
+  --s:   max(0.5rem, 0.75vw);
+  --xs:  max(0.25rem, 0.375vw);
+  --xxs: max(0.125rem, 0.1425vw);
+  --zero: 0px;
+
+  /* Padding for element types */
+  --padding-section: clamp(var(--m), 5vh, var(--xl)) max(var(--s), 5vw);
+  --padding-inline: var(--xs) var(--s);
+
+  /* Border Units */
+  --br-max: 999999px;
+  --br-xxl: var(--xxl);
+  --br-xl:  var(--xl);
+  --br-l:   var(--l);
+  --br-m:   var(--m);
+  --br-s:   var(--s);
+  --br-xs:  var(--xs);
+  --br-xxs: var(--xxs);
+
+  --border-l: 4px solid currentcolor;
+  --border-m: 2px solid currentcolor;
+  --border-s: 1px solid currentcolor;
+
+  /* Width Units */
+  --maxwidth-xxl: 96rem;
+  --maxwidth-xl:  72rem;
+  --maxwidth-l:   45rem;
+  --maxwidth-m:   36rem;
+  --maxwidth-s:   27rem;
+  --maxwidth-xs:  18rem;
+  --maxwidth-xxs: 9rem;
+
+  --maxwidth-page: 72rem;
+
+  /* Time units */
+  --time-l: 0.4s;
+  --time-m: 0.2s;
+  --time-s: 0.1s;
+
+  /* Motion */
+  --transition-l: all 0.4s;
+  --transition-m: all 0.2s;
+  --transition-s: all 0.1s;
+  
+  /* Z Index */
+  --z-max: 999999px;
+  --z-5: 5;
+  --z-4: 4;
+  --z-3: 3;
+  --z-2: 2;
+  --z-1: 1;
+  --z-0: 0;  
+}
+

@@ -1,0 +1,71 @@
+/* #=#=# COLORS #=#=# */
+/* Colors and gradients */
+
+:root {
+  /* Black & White */
+  --black: #1e1e1e;
+  --white: #ffffff;
+
+  /* Gray/Grey */
+  --gray-9: #2e2d2e;
+  --gray-8: #5c5a5c;
+  --gray-7: #89878a;
+  --gray-6: #b7b4b8;
+  --gray-5: #e5e1e6;
+  --gray-4: #eae7eb;
+  --gray-3: #efedf0;
+  --gray-2: #f5f3f5;
+  --gray-1: #faf9fa;
+  --gray-0: #fefefe;
+
+  --grey-9: var(--gray-9);
+  --grey-8: var(--gray-8);
+  --grey-7: var(--gray-7);
+  --grey-6: var(--gray-6);
+  --grey-5: var(--gray-5);
+  --grey-4: var(--gray-4);
+  --grey-3: var(--gray-3);
+  --grey-2: var(--gray-2);
+  --grey-1: var(--gray-1);
+  --grey-0: var(--gray-0);
+
+  /* Primary */
+  --primary-0: #ffeceb;
+  --primary-1: #ffd9d7;
+  --primary-2: #ffb3af;
+  --primary-3: #ff8d86;
+  --primary-4: #ff675e;
+  --primary-5: #ff4136;
+  --primary-6: #cc342b;
+  --primary-7: #992720;
+  --primary-8: #661a16;
+  --primary-9: #330d0b;
+
+  /* Secondary */
+  --secondary-0: #fffae6;
+  --secondary-1: #fff5cc;
+  --secondary-2: #ffeb99;
+  --secondary-3: #fee266;
+  --secondary-4: #fed833;
+  --secondary-5: #fece00;
+  --secondary-6: #cba500;
+  --secondary-7: #987c00;
+  --secondary-8: #665200;
+  --secondary-9: #332900;
+
+  /* Accent */
+  --accent-0: #e6eaff;
+  --accent-1: #ccd6ff;
+  --accent-2: #99acff;
+  --accent-3: #6683fe;
+  --accent-4: #3359fe;
+  --accent-5: #0030fe;
+  --accent-6: #0026cb;
+  --accent-7: #001d98;
+  --accent-8: #001366;
+  --accent-9: #000a33;
+
+  /* Text */
+  --textcolor-heading: var(--black);
+  --textcolor-body: var(--gray-8);
+}
