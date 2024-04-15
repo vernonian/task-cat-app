@@ -1,6 +1,5 @@
 <script lang="ts">
   import "$lib/css/zen.css";
-  import Task from "$lib/components/Task.svelte";
 	import Todos from "$lib/components/Todos.svelte";
   import sampleData from "$lib/sampleData";
 	import type { TodoTaskType } from "$lib/types/TodoTask";
@@ -12,7 +11,7 @@
   // ];
 </script>
 
-<Todos {todos} />
+<Todos todos={todos}/>
 <!-- {#each sampleData as task (task.id)}
   <Task 
     taskProps={task}

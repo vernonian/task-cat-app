@@ -1,15 +1,20 @@
 <script lang="ts">
+  import { createEventDispatcher } from "svelte";
 	import type { TodoTaskType } from "$lib/types/TodoTask";
-
+  import TodoTask from "./TodoTask.svelte";
+	import FilterButtons from "./FilterButtons.svelte";
+  const dispatch = createEventDispatcher();
 
   // Props
   export let todos:TodoTaskType[];
+
 
   // Reactive variables
   $: totalTodos = todos.length;
   $: completedTodos = todos.filter((todo) => todo.completed).length;
   
-  let currentFilter:string = 'all';
+  let currentFilter:string = 'all'; // bound to <FilterButtons>
+
   let newTodoName:string = '';
   let newTodoId:number;
   $: {
@@ -22,6 +27,11 @@
   }
 
   // Functions
+  /* Updates a todo object in the todos array by a matching index */
+  function updateTodoItem(todo:TodoTaskType) {
+    const i = todos.findIndex((t) => {t.id === todo.id}); // Find index of clicked todo task item
+    todos[i] = {...todos[i], ...todo};  // Update the 'completed' property with that of the passed parameter 
+  }
   
   /* Removes a todo item by filtering it out via its id. */
   function removeTodo(itemToRemove:TodoTaskType) {
@@ -69,10 +79,13 @@
 </script>
 
 
-
 <section class="section-wrap">
   <section class="content-wrap">
     <h1>Task Kat</h1>
+    <FilterButtons 
+      bind:filter = {currentFilter}
+      on:filter={ (e) => {filterTodoItems(e.detail, todos)}}
+    />
 
     <!-- Create form to add new todo list item -->
     <form
@@ -88,19 +101,6 @@
       <button type="submit">Add</button>
     </form>
 
-    <!-- Filter -->
-    <section class="filters">
-      <button class:btn-active={currentFilter === 'all'} type="button" aria-pressed="true"
-        on:click={() => filterTodoItems('all', todos)}
-      >All</button>
-      <button class:btn-active={currentFilter === 'undone'} type="button" aria-pressed="false"
-        on:click={() => filterTodoItems('undone', todos)}
-      >Undone</button>
-      <button class:btn-active={currentFilter === 'done'} type="button" aria-pressed="false"
-        on:click={() => filterTodoItems('done', todos)}
-      >Done</button>
-    </section>
-
     <!-- Progress -->
     <section>
       <p>List progression: {completedTodos}/{totalTodos}</p>
@@ -111,43 +111,23 @@
       class="todo-list"
       role="list"
       aria-labelledby="list-heading">
-      <!-- Todo edit mode -->
-
       {#each filterTodoItems(currentFilter, todos) as todo (todo.id)}
         <li>
-          <div>
-            <input 
-              type="checkbox" 
-              id="todo-{todo.id}"
-              on:click={() => todo.completed = !todo.completed}
-              checked={todo.completed}
-              />
-              <label for="todo-{todo.id}">{todo.name} ({todo.id})</label>
-            </div>
-            <div class="btn-group">
-              <button type="button">Edit</button>
-              <button type="button"
-                on:click={() => removeTodo(todo)}
-              >Delete</button>
-            </div>
-          </li>      
+          <TodoTask todo={todo} 
+            on:remove={(e) => removeTodo(e.detail)}
+            on:update={(e) => updateTodoItem(e.detail)}
+          />
+        </li>      
         {:else}
           <li>Nothing to do!</li>
       {/each}
-      
-      
     </ul>
-
   </section>
 </section>
 
 <style>
   .content-wrap {
     max-width: var(--maxwidth-l);
-  }
-
-  .btn-active {
-    background-color: aqua;
   }
 
   .todo-list {
