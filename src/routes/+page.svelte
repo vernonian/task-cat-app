@@ -3,6 +3,7 @@
 	import Todos from "$lib/components/Todos.svelte";
   import sampleData from "$lib/sampleData";
 	import type { TodoTaskType } from "$lib/types/TodoTask";
+  import '$lib/css/zen.css';
 
   let todos:TodoTaskType[] = sampleData;
   //   { id: 1, name: "Create a Svelte starter app", completed: true },

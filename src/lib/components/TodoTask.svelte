@@ -57,7 +57,7 @@
       on:submit|preventDefault={onSave}
       on:keydown={(e) => {e.key === 'Escape' && onCancel()}}
       >
-      <div>
+      <div class="f-col gap-xs">
         <label
           for="todo-{todo.id}"
           class="todo-task-label"
@@ -84,6 +84,7 @@
     </form>
   {:else}
   <!-- View mode  -->
+  <div class="f-row gap-s f-c-b">
     <div>
       <input 
         type="checkbox" 
@@ -99,14 +100,38 @@
         type="button">Edit</button>
       <button type="button"
         on:click={onRemove}
+        class="danger"
       >Delete</button>
     </div>
+  </div>
   {/if}
 </div>
 
 
 <style>
-  /* .task-item {
 
-  } */
+  .todo-task {
+    padding: var(--xs);
+    border: dashed 1px var(--gray-5);
+  }
+
+  input:checked ~ label {
+    text-decoration: line-through;
+    color: var(--gray-6);
+  }
+
+  button {
+    opacity: 0.8;
+    transition: opacity 0.2s;
+  }
+
+  .todo-task:has(input:checked) button {
+    opacity: 0.6;
+  }
+
+  .todo-task button:hover,
+  .todo-task:has(input:checked) button:hover {
+    opacity: 1;
+  }
+
 </style>

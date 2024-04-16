@@ -1,9 +1,11 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-	import type { TodoTaskType } from "$lib/types/TodoTask";
+	const dispatch = createEventDispatcher();
+  import type { TodoTaskType } from "$lib/types/TodoTask";
   import TodoTask from "./TodoTask.svelte";
 	import FilterButtons from "./FilterButtons.svelte";
-  const dispatch = createEventDispatcher();
+  import MoreActions from "./MoreActions.svelte";
+
 
   // Props
   export let todos:TodoTaskType[];
@@ -73,6 +75,18 @@
     }
   }
 
+  function checkAllTasks(completed:boolean) {
+    todos.forEach( (t, i) => {
+      todos[i].completed = completed;
+    });
+  }
+
+  function removeCompletedTasks() {
+    // Updated the todo array with only items that are not complete
+    todos = todos.filter( (t) => {
+      return !t.completed;
+    });
+  }
   // Debug
   // $: console.log("newTodoName: " + newTodoName);
 
@@ -85,6 +99,12 @@
     <FilterButtons 
       bind:filter = {currentFilter}
       on:filter={ (e) => {filterTodoItems(e.detail, todos)}}
+    />
+
+    <MoreActions 
+      todos={todos}
+      on:checkAll={ (e) => {checkAllTasks(e.detail)} }
+      on:removeCompleted={removeCompletedTasks}
     />
 
     <!-- Create form to add new todo list item -->
@@ -108,7 +128,7 @@
 
     <!-- Todo list -->
     <ul 
-      class="todo-list"
+      class="todo-list list-wrap"
       role="list"
       aria-labelledby="list-heading">
       {#each filterTodoItems(currentFilter, todos) as todo (todo.id)}
