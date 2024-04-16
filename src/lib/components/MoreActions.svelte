@@ -3,11 +3,16 @@
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
 
-
+  // Props
   export let todos:TodoTaskType[];
 
+  // Variables
   let completed:boolean = true;
 
+  // Reactive Variables
+  $: completedTodoTasks = todos.filter( (t) => t.completed === true ).length;
+
+  // Functions
   const checkAll = () => {
     dispatch('checkAll', completed);
     completed = !completed;
@@ -16,11 +21,6 @@
   const removeCompleted = () => {
     dispatch('removeCompleted');
   }
-
-  $: completedTodoTasks = todos.filter( (t) => t.completed === true ).length;
-
-  $: console.log(todos.length);
-
 </script>
 
 <section class="more-actions">

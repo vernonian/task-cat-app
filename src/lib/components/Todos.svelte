@@ -1,32 +1,27 @@
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
+  import { SvelteComponent, createEventDispatcher } from "svelte";
 	const dispatch = createEventDispatcher();
   import type { TodoTaskType } from "$lib/types/TodoTask";
   import TodoTask from "./TodoTask.svelte";
 	import FilterButtons from "./FilterButtons.svelte";
   import MoreActions from "./MoreActions.svelte";
+	import NewTodoFrom from "./NewTodoFrom.svelte";
+	import TodosStatus from "./TodosStatus.svelte";
 
 
   // Props
   export let todos:TodoTaskType[];
 
-
-  // Reactive variables
-  $: totalTodos = todos.length;
-  $: completedTodos = todos.filter((todo) => todo.completed).length;
-  
+  // Variables
   let currentFilter:string = 'all'; // bound to <FilterButtons>
-
   let newTodoName:string = '';
   let newTodoId:number;
-  $: {
-    if(completedTodos === 0) {
-      newTodoId = 1;
-    }
-    else {
-      newTodoId = Math.max(...todos.map( (t) => t.id )) + 1;
-    }
-  }
+
+  // Reactive variables
+  $: newTodoId = todos.length ? Math.max(...todos.map( (t) => t.id + 1)) : 1;
+
+  // Component DOM References
+  let todosStatus:SvelteComponent;
 
   // Functions
   /* Updates a todo object in the todos array by a matching index */
@@ -38,10 +33,11 @@
   /* Removes a todo item by filtering it out via its id. */
   function removeTodo(itemToRemove:TodoTaskType) {
     todos = todos.filter( (t) => t.id !== itemToRemove.id );
+    todosStatus.focus();
   }
 
   /* Adds a todo item to the todos array. */
-  function addTodoItem() {   
+  function addTodoItem(newTodoName:string) {   
     let itemToAdd:TodoTaskType = {
       id: newTodoId,
       name: newTodoName,
@@ -53,8 +49,6 @@
     }
     // Add the new TodoTaskType item to the todos array
     todos = [...todos, itemToAdd];
-    // Reset new todo name to clear input value
-    newTodoName = ""
   }
 
   /* Return a filtered array based on the filter prop */
@@ -87,9 +81,6 @@
       return !t.completed;
     });
   }
-  // Debug
-  // $: console.log("newTodoName: " + newTodoName);
-
 </script>
 
 
@@ -100,32 +91,21 @@
       bind:filter = {currentFilter}
       on:filter={ (e) => {filterTodoItems(e.detail, todos)}}
     />
-
+    <!-- MoreActions -->
     <MoreActions 
       todos={todos}
       on:checkAll={ (e) => {checkAllTasks(e.detail)} }
       on:removeCompleted={removeCompletedTasks}
     />
-
-    <!-- Create form to add new todo list item -->
-    <form
-      on:submit|preventDefault={() => addTodoItem()}
-    >
-      <h2><label for="todo-0">What needs to be done?</label></h2>
-      <input 
-        bind:value={newTodoName}
-        type="text" 
-        name="todo-0" 
-        autocomplete="off"
-      />
-      <button type="submit">Add</button>
-    </form>
-
-    <!-- Progress -->
-    <section>
-      <p>List progression: {completedTodos}/{totalTodos}</p>
-    </section>
-
+    <!-- NewTodoForm -->
+    <NewTodoFrom 
+      autofocus={true}
+      on:addTodoTask={ (e) => addTodoItem(e.detail) }
+    />
+    <!-- Status -->
+    <TodosStatus 
+      bind:this={todosStatus} 
+      todos={todos} />
     <!-- Todo list -->
     <ul 
       class="todo-list list-wrap"

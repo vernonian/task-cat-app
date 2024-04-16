@@ -13,8 +13,3 @@
 </script>
 
 <Todos todos={todos}/>
-<!-- {#each sampleData as task (task.id)}
-  <Task 
-    taskProps={task}
-  />
-{/each} -->

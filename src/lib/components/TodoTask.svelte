@@ -2,14 +2,18 @@
   import { createEventDispatcher } from "svelte";
   import {daysOfTheWeek} from "$lib/daysOfTheWeek";
 	import type { TodoTaskType } from "$lib/types/TodoTask";
+  import { tick } from "svelte";
+  import { focusOnInit, selectOnFocus } from "$lib/actions";
 
   const dispatch = createEventDispatcher();
 
   // Props
   export let todo:TodoTaskType;
 
-  let editing:boolean = false;
+  let editing:boolean = false;            // Used to render edit or view UI
+  let editButtonPressed:boolean = false;  // Used to track edit button press, to give focus to other elements
   let name:string = todo.name;
+  let nameInputElement:any;
 
   // Search the daysOfWeek array to find index matching prop.dayTarget - Used to render day marker
   // let dayIndex:number = daysOfTheWeek.findIndex(obj => obj.day === taskProps.dayTarget);
@@ -37,16 +41,21 @@
     dispatch('remove', todo); 
   }
 
-  // Enter editing mode
+  // Enter editing mode, wait for tick promise, then assign focus
   function onEdit() {
+    editButtonPressed = true;
     editing = true;
   }
+
+  const focusEditButton = (node:any) => editButtonPressed && node.focus();
 
   // Toggle the completed value & emit the update event via update()
   function onToggle() {
     todo.completed = !todo.completed; 
     update(todo);
   }
+
+  
 </script>
 
 
@@ -64,6 +73,9 @@
           >New name for '{todo.name}'</label>
         <input
           bind:value={name}
+          bind:this={nameInputElement}
+          use:selectOnFocus
+          use:focusOnInit
           class="todo-task-input"
           type="text"
           id="todo-{todo.id}"
@@ -97,6 +109,7 @@
     <div class="btn-group">
       <button 
         on:click={onEdit}
+        use:focusEditButton
         type="button">Edit</button>
       <button type="button"
         on:click={onRemove}
