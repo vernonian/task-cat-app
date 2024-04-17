@@ -2,7 +2,6 @@
   import { createEventDispatcher } from "svelte";
   import {daysOfTheWeek} from "$lib/daysOfTheWeek";
 	import type { TodoTaskType } from "$lib/types/TodoTask";
-  import { tick } from "svelte";
   import { focusOnInit, selectOnFocus } from "$lib/actions";
 
   const dispatch = createEventDispatcher();
@@ -15,8 +14,12 @@
   let name:string = todo.name;
   let nameInputElement:any;
 
+  let dayAbbr:string|undefined = setDayAbbrBasedOnTaskDay(todo.dayTarget);
+  
+ 
+
   // Search the daysOfWeek array to find index matching prop.dayTarget - Used to render day marker
-  // let dayIndex:number = daysOfTheWeek.findIndex(obj => obj.day === taskProps.dayTarget);
+  let dayIndex:number = daysOfTheWeek.findIndex(obj => obj.day === todo.dayTarget);
   // console.log(dayIndex);
 
   function update(updatedTask:any) {
@@ -53,6 +56,17 @@
   function onToggle() {
     todo.completed = !todo.completed; 
     update(todo);
+  }
+
+  // Map task's day of the week string to abbreviation
+  function setDayAbbrBasedOnTaskDay(d:string|undefined):string|undefined {
+    // get index of a match in the daysofweek array to the todo.dayTarget
+    // use index to display abbreviation
+    if(todo.dayTarget) {
+      let i = daysOfTheWeek.findIndex( (d) => d.day === todo.dayTarget);
+      return daysOfTheWeek[i].abbr;
+    }
+    else {return undefined;}
   }
 
   
@@ -96,23 +110,34 @@
     </form>
   {:else}
   <!-- View mode  -->
-  <div class="f-row gap-s f-c-b">
-    <div>
+  <div class="view-mode">
+    <div class="input-group f-row gap-xs">
       <input 
         type="checkbox" 
         id="todo-{todo.id}"
         on:click={onToggle}
         checked={todo.completed}
         />
-        <label for="todo-{todo.id}">{todo.name} ({todo.id})</label>
+        <label for="todo-{todo.id}" class="f-row gap-s">
+          <span>{todo.name}</span>
+          {#if (todo.dayTarget)}
+            <span class="task-extra day">({dayAbbr})</span>
+          {/if}          
+          {#if (todo.repeatsWeekly)}
+            <span class="task-extra weekly">(R)</span>
+          {/if}
+          <span class="task-extra times-per-week">(x{todo.timesPerWeek})</span>
+        </label>
     </div>
     <div class="btn-group">
       <button 
         on:click={onEdit}
         use:focusEditButton
+        disabled={todo.completed}
         type="button">Edit</button>
       <button type="button"
         on:click={onRemove}
+        disabled={todo.completed}
         class="danger"
       >Delete</button>
     </div>
@@ -128,6 +153,22 @@
     border: dashed 1px var(--gray-5);
   }
 
+  .todo-task label {
+    justify-content: stretch;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .view-mode {
+    display: grid;
+    grid-template-columns: 1fr auto;
+  }
+
+  .input-group {
+    display: grid;
+    grid-template-columns: auto 1fr;
+  }
+
   input:checked ~ label {
     text-decoration: line-through;
     color: var(--gray-6);
@@ -138,13 +179,17 @@
     transition: opacity 0.2s;
   }
 
-  .todo-task:has(input:checked) button {
+  .todo-task:has(input:checked) button{
     opacity: 0.6;
   }
 
   .todo-task button:hover,
-  .todo-task:has(input:checked) button:hover {
+  .todo-task:has(input:checked) button:not[disabled]:hover {
     opacity: 1;
   }
 
+  .task-extra {
+    font-size: var(--fontsize-body-xs);
+    opacity: 0.8;
+  }
 </style>
