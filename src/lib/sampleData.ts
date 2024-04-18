@@ -8,7 +8,7 @@ const sampleData:TodoTaskType[] = [
     repeatsWeekly: true,
     timesPerWeek: 1,
     tag: 'default',
-    category: 'household',
+    category: 'house',
     dayTarget: 'monday'
   },
   { 
@@ -18,7 +18,7 @@ const sampleData:TodoTaskType[] = [
     repeatsWeekly: true,
     timesPerWeek: 1,
     tag: 'default',
-    category: 'household'
+    category: 'house'
   },
   { 
     id: 3,
@@ -37,7 +37,7 @@ const sampleData:TodoTaskType[] = [
     repeatsWeekly: true,
     timesPerWeek: 1,
     tag: 'default',
-    category: 'relationships',
+    category: 'social',
   },
   { 
     id: 5,
@@ -46,7 +46,7 @@ const sampleData:TodoTaskType[] = [
     completed: false,
     timesPerWeek: 1,
     tag: 'default',
-    category: 'relationships',
+    category: 'social',
   },
   { 
     id: 6,
@@ -55,7 +55,7 @@ const sampleData:TodoTaskType[] = [
     repeatsWeekly: true,
     timesPerWeek: 1,
     tag: 'default',
-    category: 'relationships',
+    category: 'social',
     dayTarget: 'tuesday'
   },
   { 
@@ -65,9 +65,45 @@ const sampleData:TodoTaskType[] = [
     repeatsWeekly: true,
     timesPerWeek: 1,
     tag: 'default',
-    category: 'relationships',
+    category: 'social',
     dayTarget: 'friday'
   },
+  {
+    id: 8,
+    name: 'Yoga',
+    completed: false,
+    repeatsWeekly: true,
+    timesPerWeek: 1,
+    tag: 'default',
+    category: 'body',
+  },
+  {
+    id: 9,
+    name: 'Walk',
+    completed: false,
+    repeatsWeekly: true,
+    timesPerWeek: 1,
+    tag: 'default',
+    category: 'body',
+  },
+  {
+    id: 10,
+    name: 'Climb',
+    completed: false,
+    repeatsWeekly: true,
+    timesPerWeek: 1,
+    tag: 'default',
+    category: 'body',
+  },
+  {
+    id: 11,
+    name: 'Climb',
+    completed: false,
+    repeatsWeekly: true,
+    timesPerWeek: 1,
+    tag: 'default',
+    category: 'body',
+  }
 ]
 
 export default sampleData;

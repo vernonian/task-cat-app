@@ -2,11 +2,12 @@
   import { SvelteComponent, createEventDispatcher } from "svelte";
 	const dispatch = createEventDispatcher();
   import type { TodoTaskType } from "$lib/types/TodoTask";
-  import TodoTask from "./TodoTask.svelte";
 	import FilterButtons from "./FilterButtons.svelte";
   import MoreActions from "./MoreActions.svelte";
 	import NewTodoFrom from "./NewTodoFrom.svelte";
 	import TodosStatus from "./TodosStatus.svelte";
+	import type { CategoryTaskListType } from "$lib/types/CategoryTaskList";
+	import TodoCategoryList from "./TodoCategoryList.svelte";
 
 
   // Props
@@ -16,6 +17,9 @@
   let currentFilter:string = 'all'; // bound to <FilterButtons>
   let newTodoName:string = '';
   let newTodoId:number;
+
+  const categories:string[] = ['house','body','mind','hobbies','social','misc'];
+
 
   // Reactive variables
   $: newTodoId = todos.length ? Math.max(...todos.map( (t) => t.id + 1)) : 1;
@@ -81,6 +85,8 @@
       return !t.completed;
     });
   }
+
+  // $: console.log(todos);
 </script>
 
 
@@ -106,32 +112,20 @@
     <TodosStatus 
       bind:this={todosStatus} 
       todos={todos} />
+
     <!-- Todo list -->
-    <ul 
-      class="todo-list list-wrap"
-      role="list"
-      aria-labelledby="list-heading">
-      {#each filterTodoItems(currentFilter, todos) as todo (todo.id)}
-        <li>
-          <TodoTask todo={todo} 
-            on:remove={(e) => removeTodo(e.detail)}
-            on:update={(e) => updateTodoItem(e.detail)}
-          />
-        </li>      
-        {:else}
-          <li>Nothing to do!</li>
-      {/each}
-    </ul>
+    <!-- For each category in the categorized task list array -->
+    {#each categories as category}
+      <TodoCategoryList category={category} todos={todos} 
+        on:remove={(e) => removeTodo(e.detail)}
+        on:update={(e) => updateTodoItem(e.detail)}
+      />
+    {/each}
   </section>
 </section>
 
 <style>
   .content-wrap {
     max-width: var(--maxwidth-l);
-  }
-
-  .todo-list {
-    list-style: none;
-    padding: 0px;
   }
 </style>
