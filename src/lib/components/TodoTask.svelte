@@ -3,6 +3,7 @@
   import {daysOfTheWeek} from "$lib/daysOfTheWeek";
 	import type { TodoTaskType } from "$lib/types/TodoTask";
   import { focusOnInit, selectOnFocus } from "$lib/actions";
+	import Repeat from "$lib/Repeat.svelte";
 
   const dispatch = createEventDispatcher();
 
@@ -55,6 +56,11 @@
   // Toggle the completed value & emit the update event via update()
   function onToggle() {
     todo.completed = !todo.completed; 
+    update(todo);
+  }
+
+  function onRepeatWeeklyToggle() {
+    todo.repeatsWeekly = !todo.repeatsWeekly;
     update(todo);
   }
 
@@ -122,10 +128,25 @@
           <span>{todo.name}</span>
           {#if (todo.dayTarget)}
             <span class="task-extra day">({dayAbbr})</span>
-          {/if}          
-          {#if (todo.repeatsWeekly)}
-            <span class="task-extra weekly">(R)</span>
           {/if}
+
+          <!-- Repeats Weekly Indicator -->
+          <div class="repeats-weekly">
+            <input
+              type="checkbox"
+              on:click={onRepeatWeeklyToggle}
+              id="{todo.id}-repeat"
+              class="hidden"
+              checked={todo.repeatsWeekly}
+            />
+            <label 
+              class:does-repeat={todo.repeatsWeekly}
+              for="{todo.id}-repeat">
+              <Repeat/>
+            </label>
+          </div>
+
+          <!-- Times Repeating per Week -->
           <span class="task-extra times-per-week">(x{todo.timesPerWeek})</span>
         </label>
     </div>
@@ -191,5 +212,24 @@
   .task-extra {
     font-size: var(--fontsize-body-xs);
     opacity: 0.8;
+  }
+
+
+  .repeats-weekly {
+    width: 12px;
+
+  }
+
+  .repeats-weekly label {
+    opacity: 0.2;
+    transition: opacity 0.2s;
+  }
+
+  .repeats-weekly label.does-repeat {
+    opacity: 0.8;
+  }
+
+  .hidden {
+    display: none;
   }
 </style>
