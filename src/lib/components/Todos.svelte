@@ -8,6 +8,7 @@
 	import TodosStatus from "./TodosStatus.svelte";
 	import type { CategoryTaskListType } from "$lib/types/CategoryTaskList";
 	import TodoCategoryList from "./TodoCategoryList.svelte";
+	import TodoTask from "./TodoTask.svelte";
 
 
   // Props
@@ -28,10 +29,16 @@
   let todosStatus:SvelteComponent;
 
   // Functions
+
+ 
+
   /* Updates a todo object in the todos array by a matching index */
   function updateTodoItem(todo:TodoTaskType) {
-    const i = todos.findIndex((t) => {t.id === todo.id}); // Find index of clicked todo task item
-    todos[i] = {...todos[i], ...todo};  // Update the 'completed' property with that of the passed parameter 
+    // Find index of clicked todo task item
+    const i = todos.findIndex( t => t.id === todo.id); 
+
+    // Update the 'completed' property with that of the passed parameter 
+    todos[i] = {...todos[i], ...todo};  
   }
   
   /* Removes a todo item by filtering it out via its id. */
@@ -116,7 +123,7 @@
     <!-- Todo list -->
     <!-- For each category in the categorized task list array -->
     {#each categories as category}
-      <TodoCategoryList category={category} todos={todos} 
+      <TodoCategoryList category={category} bind:todos={todos} 
         on:remove={(e) => removeTodo(e.detail)}
         on:update={(e) => updateTodoItem(e.detail)}
       />

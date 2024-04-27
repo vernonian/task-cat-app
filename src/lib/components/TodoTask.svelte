@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onMount } from "svelte";
   import {daysOfTheWeek} from "$lib/daysOfTheWeek";
 	import type { TodoTaskType } from "$lib/types/TodoTask";
-  import { focusOnInit, selectOnFocus } from "$lib/actions";
+  import { focusOnInit, selectAllTextOnFocus } from "$lib/actions";
 	import Repeat from "$lib/Repeat.svelte";
 
   const dispatch = createEventDispatcher();
@@ -12,8 +12,8 @@
 
   let editing:boolean = false;            // Used to render edit or view UI
   let editButtonPressed:boolean = false;  // Used to track edit button press, to give focus to other elements
-  let name:string = todo.name;
-  let nameInputElement:any;
+  
+   let name:string = todo.name;
 
   let dayAbbr:string|undefined = setDayAbbrBasedOnTaskDay(todo.dayTarget);
   
@@ -28,27 +28,45 @@
     dispatch('update', todo); // Emit the "update" event
   }
 
+  // Enter editing mode and give input focus (handled by the focusOnInit action)
+  function onEdit() {
+    editButtonPressed = true;
+
+    // Enter edit mode
+    editing = true;
+  }
+
   // User cancels editing mode so new inputs are saved
   function onCancel() {
-    name = todo.name; // 
-    editing = false;  // Leave edit mode
+    // Reset name to props' original value
+    name = todo.name; 
+
+    // Leave edit mode
+    editing = false;  
+    console.log("Task name edit canceled");
+    console.log("todo.name: " + todo.name + " | name: " + name);
+    // console.log(todo);
   }
 
   // User saves changed in editing mode, so the todoTask must be updated
   function onSave() {
+    // Update props
     update( {name: name} );
-    editing = false; // Leave edit mode
+    
+    // Leave edit mode
+    editing = false;
+    
+
+    // Debug
+    console.log("Task name saved");
+    console.log("todo.name: " + todo.name + " | name: " + name);
+    // console.log(todo);
   }
 
   // Emit the remove event
   function onRemove() {
     dispatch('remove', todo); 
-  }
-
-  // Enter editing mode, wait for tick promise, then assign focus
-  function onEdit() {
-    editButtonPressed = true;
-    editing = true;
+    console.log("Task removed");
   }
 
   const focusEditButton = (node:any) => editButtonPressed && node.focus();
@@ -59,6 +77,7 @@
     update(todo);
   }
 
+  // Toggle the repeats weekly property and update todo
   function onRepeatWeeklyToggle() {
     todo.repeatsWeekly = !todo.repeatsWeekly;
     update(todo);
@@ -75,87 +94,88 @@
     else {return undefined;}
   }
 
-  
+  function onTextInputKeyDownHandler(e:KeyboardEvent) {
+    switch (e.key) {
+      case "Escape": 
+        // Cancel the editing state
+        onCancel();
+        break;
+      case "Enter":
+        // Save the value
+        onSave();
+        break;
+      default:
+        break;
+    }
+  }  
 </script>
 
 
 <div class="todo-task">
-  {#if editing}
-  <!-- Edit mode  -->
-    <form role="text"
-      on:submit|preventDefault={onSave}
-      on:keydown={(e) => {e.key === 'Escape' && onCancel()}}
-      >
-      <div class="f-col gap-xs">
-        <label
-          for="todo-{todo.id}"
-          class="todo-task-label"
-          >New name for '{todo.name}'</label>
-        <input
-          bind:value={name}
-          bind:this={nameInputElement}
-          use:selectOnFocus
-          use:focusOnInit
-          class="todo-task-input"
-          type="text"
-          id="todo-{todo.id}"
-          autocomplete="off"
-        />
-      </div>
-      <div>
+  <div class="input-group f-row gap-xs">
+    <input 
+      type="checkbox" 
+      id="todo-{todo.id}"
+      on:click={onToggle}
+      checked={todo.completed}
+    />
+    <!-- <label class="f-row gap-s"></label> -->
+
+    <div class="f-row f-c-s gap-s">
+
+      <!-- View mode -->
+      {#if !editing}
         <button 
-          on:click={onCancel}
+          on:click={onEdit}
+          class="todo-task-label-button"
+          disabled={todo.completed}
           type="button"
-          >Cancel</button>
-        <button 
-          on:click={onSave}
-          disabled={!name}
-          type="submit"
-          >Save</button>
-      </div>
-    </form>
-  {:else}
-  <!-- View mode  -->
-  <div class="view-mode">
-    <div class="input-group f-row gap-xs">
-      <input 
-        type="checkbox" 
-        id="todo-{todo.id}"
-        on:click={onToggle}
-        checked={todo.completed}
+        >
+          {name}
+        </button>   
+
+      <!-- Edit mode -->
+      <!-- Todo: change on:blur={onSave} to something else because on the escape key press counts as a blur event too -->
+      {:else}
+      <input
+        bind:value={name}
+        
+        on:keydown={onTextInputKeyDownHandler}
+        use:focusOnInit
+        use:selectAllTextOnFocus
+        class="todo-task-input"
+        type="text"
+        id="task-{todo.id}"
+        autocomplete="off"
+      />
+      {/if}                                                     
+      
+      <!-- Day Target -->
+      {#if (todo.dayTarget)}
+        <span class="task-extra day">({dayAbbr})</span>
+      {/if}
+
+      <!-- Repeats Weekly Indicator -->
+      <div class="repeats-weekly">
+        <input
+          type="checkbox"
+          on:click={onRepeatWeeklyToggle}
+          id="{todo.id}-repeat"
+          class="hidden"
+          checked={todo.repeatsWeekly}
         />
-        <label for="todo-{todo.id}" class="f-row gap-s">
-          <span>{todo.name}</span>
-          {#if (todo.dayTarget)}
-            <span class="task-extra day">({dayAbbr})</span>
-          {/if}
-
-          <!-- Repeats Weekly Indicator -->
-          <div class="repeats-weekly">
-            <input
-              type="checkbox"
-              on:click={onRepeatWeeklyToggle}
-              id="{todo.id}-repeat"
-              class="hidden"
-              checked={todo.repeatsWeekly}
-            />
-            <label 
-              class:does-repeat={todo.repeatsWeekly}
-              for="{todo.id}-repeat">
-              <Repeat/>
-            </label>
-          </div>
-
-          <!-- Times Repeating per Week -->
-          <span class="task-extra times-per-week">(x{todo.timesPerWeek})</span>
+        <label 
+          class:does-repeat={todo.repeatsWeekly}
+          for="{todo.id}-repeat">
+          <Repeat/>
         </label>
+      </div>
+
+      <!-- Times Repeating per Week -->
+      <span class="task-extra times-per-week">(x{todo.timesPerWeek})</span>
     </div>
+    <!-- </label> -->
     <div class="btn-group">
-      <button 
-        on:click={onEdit}
-        use:focusEditButton
-        disabled={todo.completed}
-        type="button">Edit</button>
       <button type="button"
         on:click={onRemove}
         disabled={todo.completed}
@@ -163,7 +183,6 @@
       >Delete</button>
     </div>
   </div>
-  {/if}
 </div>
 
 
@@ -172,17 +191,14 @@
   .todo-task {
     padding: var(--xs);
     border: dashed 1px var(--gray-5);
+    display: grid;
+    grid-template-columns: 1fr auto;
   }
 
   .todo-task label {
     justify-content: stretch;
     align-items: center;
     cursor: pointer;
-  }
-
-  .view-mode {
-    display: grid;
-    grid-template-columns: 1fr auto;
   }
 
   .input-group {
@@ -196,7 +212,7 @@
   }
 
   button {
-    opacity: 0.8;
+    /* opacity: 0.8; */
     transition: opacity 0.2s;
   }
 
@@ -207,6 +223,27 @@
   .todo-task button:hover,
   .todo-task:has(input:checked) button:not[disabled]:hover {
     opacity: 1;
+  }
+
+  .todo-task-input,
+  .todo-task-label-button {
+    display: inline-block;
+    background-color: var(--white);
+    color: var(--black);
+    padding: var(--xs) var(--s);
+    border: solid 1px var(--gray-5);
+    text-align: left;
+    width: 100%;
+    max-width: max-content;
+  }
+
+  .todo-task-input {
+    border-color: var(--primary-5);
+  }
+
+  .todo-task-label-button:hover {
+    background-color: var(--gray-1);
+    cursor: pointer;
   }
 
   .task-extra {

@@ -1,7 +1,7 @@
 
 
 export function focusOnInit(node:any) {
-  if (node && typeof node.selec === 'function') {
+  if (node && typeof node.select === 'function') {
     node.focus();
   }
 }
@@ -9,7 +9,7 @@ export function focusOnInit(node:any) {
 /**
  * Select the text when element gains focus
  */
-export function selectOnFocus(node:any) {
+export function selectAllTextOnFocus(node:any) {
   if (node && typeof node.select === 'function') {
     // Add event listener to get select when focused
     const onFocus = (event) => node.select();

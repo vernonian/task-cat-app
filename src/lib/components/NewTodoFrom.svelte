@@ -2,7 +2,7 @@
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
   import { onMount } from "svelte";
-  import { selectOnFocus } from "$lib/actions";
+  import { selectAllTextOnFocus  } from "$lib/actions";
 
   export let autofocus:boolean = false;
 
@@ -36,7 +36,7 @@
     <input 
       bind:value={name}
       bind:this={nameInputElement}
-      use:selectOnFocus
+      use:selectAllTextOnFocus
       class="text-input"
       type="text" 
       name="todo-0" 

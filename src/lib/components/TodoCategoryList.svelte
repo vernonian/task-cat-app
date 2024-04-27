@@ -28,6 +28,8 @@
   // If todos changes then rebuild the categorizedTodos array to keep UI in sync with changes to todos
   $: if (todos) {
     categorizeTodos();
+    // console.log("TodoCategoryList todos:");
+    // console.log(todos)
   }
 </script>
 
