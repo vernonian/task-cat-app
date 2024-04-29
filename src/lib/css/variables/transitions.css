@@ -1,0 +1,10 @@
+/* #=#=# TRANSITIONS #=#=# */
+/* Shorthand transitions */
+
+:root {
+  --transi-all: all var(--time-m);
+  --transi-bg: background-color var(--time-m);
+  --transi-color: color var(--time-m);
+  --transi-opacity: opacity var(--time-m);
+  --transi-fill: fill var(--time-m);
+}
