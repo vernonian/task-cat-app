@@ -49,6 +49,7 @@
 
   // User saves changed in editing mode, so the todoTask must be updated
   function onSave() {
+    console.log('blur');
     // Update props
     update( {name: name} );
     
@@ -127,11 +128,10 @@
         </button>   
 
       <!-- Edit mode -->
-      <!-- Todo: change on:blur={onSave} to something else because on the escape key press counts as a blur event too -->
       {:else}
       <input
         bind:value={name}
-        
+        on:blur={onSave}
         on:keydown={onTextInputKeyDownHandler}
         use:focusOnInit
         use:selectAllTextOnFocus
