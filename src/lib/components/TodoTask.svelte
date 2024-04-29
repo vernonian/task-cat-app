@@ -45,7 +45,6 @@
     editing = false;  
     console.log("Task name edit canceled");
     console.log("todo.name: " + todo.name + " | name: " + name);
-    // console.log(todo);
   }
 
   // User saves changed in editing mode, so the todoTask must be updated
@@ -55,12 +54,6 @@
     
     // Leave edit mode
     editing = false;
-    
-
-    // Debug
-    console.log("Task name saved");
-    console.log("todo.name: " + todo.name + " | name: " + name);
-    // console.log(todo);
   }
 
   // Emit the remove event
@@ -119,7 +112,6 @@
       on:click={onToggle}
       checked={todo.completed}
     />
-    <!-- <label class="f-row gap-s"></label> -->
 
     <div class="f-row f-c-s gap-s">
 

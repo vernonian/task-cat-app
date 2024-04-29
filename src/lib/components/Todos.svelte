@@ -6,10 +6,7 @@
   import MoreActions from "./MoreActions.svelte";
 	import NewTodoFrom from "./NewTodoFrom.svelte";
 	import TodosStatus from "./TodosStatus.svelte";
-	import type { CategoryTaskListType } from "$lib/types/CategoryTaskList";
 	import TodoCategoryList from "./TodoCategoryList.svelte";
-	import TodoTask from "./TodoTask.svelte";
-
 
   // Props
   export let todos:TodoTaskType[];
