@@ -104,7 +104,7 @@
 </script>
 
 <div class="todo-task">
-	<div class="input-group f-row gap-xs">
+	<div class="input-group f-row gap-xxs">
 		<input 
       class="todo-check"
       type="checkbox" 
@@ -174,8 +174,6 @@
 
 <style>
 	.todo-task {
-		padding: var(--xxs);
-		border: dotted 1px var(--gray-5);
     color: var(--textcolor-body);
     transition: var(--transi-bg);
 	}
@@ -189,6 +187,11 @@
 		grid-template-columns: auto 1fr;
 	}
 
+  .todo-check {
+    padding: 0px;
+    /* margin: 0px; */
+  }
+
   /* Task checked state */
 	.todo-check:checked ~ div {
 		text-decoration: line-through;
@@ -200,8 +203,9 @@
 	.todo-task-label-button {
 		display: inline-block;
 		background-color: transparent;
-		padding: var(--xs) var(--s);
+		padding: var(--xs);
     border: solid 1px transparent;
+    border-radius: var(--xs);
 		text-align: left;
 		width: 100%;
 		max-width: max-content;

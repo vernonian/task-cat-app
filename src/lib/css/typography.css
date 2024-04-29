@@ -30,7 +30,7 @@ p, article, ul, ol {
 }
 body {
   font-family: var(--fontfamily-sans);
-  font-size: 1rem;
+  font-size: var(----fontsize-body-m);
   color: var(--textcolor-body);
 }
 

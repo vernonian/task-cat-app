@@ -1,7 +1,5 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { createEventDispatcher } from "svelte";
-  const dispatch = createEventDispatcher();
 	import type { TodoTaskType } from "$lib/types/TodoTask";
   import TodoTask from "./TodoTask.svelte";
 
@@ -31,9 +29,9 @@
 </script>
 
 <section class="f-col">
-  <h4>{readableCategoryName}</h4>
+  <h4 class="category-title">{readableCategoryName}</h4>
   <ul 
-    class="todo-list list-wrap"
+    class="todo-list list-wrap gap-xs"
     role="list"
     aria-labelledby="list-heading"
   >
@@ -53,8 +51,15 @@
 </section>
 
 <style>
+  .category-title {
+    text-transform: uppercase;
+    font-size: var(--fontsize-body-xs);
+    font-weight: 600;
+  }
+
   .todo-list {
     list-style: none;
-    padding: 0px;
+    padding: 0 0 var(--m);
+    border-bottom: solid 1px var(--gray-1);
   }
 </style>
