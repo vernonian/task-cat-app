@@ -1,5 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
+	import Button from './Button.svelte';
   const dispatch = createEventDispatcher();
 
 	// Props
@@ -11,8 +12,38 @@
 	$: onclick(filter);
 </script>
 
-<section class="filters">
-	<button
+<section class="filters f-col gap-xs">
+	<h3 class="body-1">Filters</h3>
+	<div class="f-row gap-xxs">
+		<!-- Reset filter to 'all' -->
+		<Button
+			id="test"
+			usage="default"
+			type="button"
+			ariaPressed=true
+			onClick={ () => dispatch('filter', 'all') }
+		>All</Button>
+
+		<!-- Set filter to 'undone' -->
+		<Button
+			id="test"
+			usage="default"
+			type="button"
+			ariaPressed=true
+			onClick={ () => dispatch('filter', 'undone') }
+		>Undone</Button>
+
+		<!-- Set filter to 'done' -->
+		<Button
+			id="test"
+			usage="default"
+			type="button"
+			ariaPressed=true
+			onClick={ () => dispatch('filter', 'done') }
+		>Done</Button>
+	</div>
+
+	<!-- <button
 		class:btn-active={filter === 'all'}
 		type="button"
 		aria-pressed="true"
@@ -29,7 +60,7 @@
 		type="button"
 		aria-pressed="false"
 		on:click={() => dispatch('filter', 'done')}>Done</button
-	>
+	> -->
 </section>
 
 <style>

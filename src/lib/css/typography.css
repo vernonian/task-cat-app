@@ -68,10 +68,9 @@ body {
   font-weight: var(--fontweight-r);
 }
 
-.body-l {font-size: 1.125rem;}
-.body-m {font-size: 1rem;}
-.body-s {font-size: 0.83rem;}
-.body-xs {font-size: 0.69rem}
+.body-1 {font-size: 1rem;}
+.body-2 {font-size: 0.83rem;}
+.body-3 {font-size: 0.69rem}
 
 @media screen and (max-width: 768px) {
   .display-1 {font-size: 3.815rem;}

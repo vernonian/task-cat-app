@@ -60,7 +60,11 @@
   }
 
   /* Return a filtered array based on the filter prop */
+  // Need to filter each category array since we moved them from a single todo array to a array of categories
   function filterTodoItems(filter:string, arr:TodoTaskType[]): TodoTaskType[] {
+    console.log("in filterTodoItems()");
+    console.log("filter: " + filter);
+    console.log(todos);
     // Update currentFilter
     currentFilter = filter;
     // If filter is undone, return an array with only items that are not completed
@@ -117,10 +121,10 @@
       bind:this={todosStatus} 
       todos={todos} />
 
-    <!-- Todo list -->
-    <!-- For each category in the categorized task list array -->
+    <!-- Todo list: for each category, render a categorized todo list -->
     {#each categories as category}
-      <TodoCategoryList category={category} bind:todos={todos} 
+    <!-- Pass the filtered array (result of filteredTodoItems() function) as the todos prop -->
+      <TodoCategoryList category={category} todos={ filterTodoItems(currentFilter, todos) } 
         on:remove={(e) => removeTodo(e.detail)}
         on:update={(e) => updateTodoItem(e.detail)}
       />
