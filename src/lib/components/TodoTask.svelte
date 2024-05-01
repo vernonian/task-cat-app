@@ -251,12 +251,16 @@
     color: var(--gray-6);
     border: none;
     border-radius: var(--xxs);
-    transition: var(--transi-bg), var(--transi-color);
+    transition: var(--transi-bg), var(--transi-color), var(--transi-opacity);
   }
 
   .delete:not(:disabled):hover {
     background-color: var(--danger-0);
     color: var(--textcolor-body);
+  }
+
+  .todo-check:checked ~ div .delete {
+    opacity: 0;
   }
 
   /* Cursors */
