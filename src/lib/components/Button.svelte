@@ -5,6 +5,7 @@
   export let ariaPressed: 'true' | 'false' | true | false = false;
   export let onClick:any;
   export let usage: 'default' | 'primary' | 'secondary' | 'danger' | 'ghost' = 'default';
+  export let visuallyActive:boolean = false;
 
 </script>
 
@@ -12,6 +13,7 @@
 <button
   id={id}
   class="{$$props.class} secondary"
+  class:visually-active={visuallyActive}
   type={type}
   aria-pressed={ariaPressed}
   on:click={onClick}
@@ -39,6 +41,8 @@
 
 
 
+
+  /* Default */
   .default, .secondary {
     background-color: var(--neutral-2);
 
@@ -51,8 +55,18 @@
     }
   }
 
-  .primary {
+  /* Primary */
+  .primary, .visually-active {
     background-color: var(--primary-5);
+    color: var(--white);
+
+    &:hover {
+      background-color: var(--primary-4);
+    }
+
+    &:active {
+      background-color: var(--primary-6);
+    }
   }
 
   .danger {
@@ -62,7 +76,4 @@
   .ghost {
     background-color: transparent;
   }
-
-
-
 </style>

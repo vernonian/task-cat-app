@@ -60,11 +60,8 @@
   }
 
   /* Return a filtered array based on the filter prop */
-  // Need to filter each category array since we moved them from a single todo array to a array of categories
   function filterTodoItems(filter:string, arr:TodoTaskType[]): TodoTaskType[] {
-    console.log("in filterTodoItems()");
-    console.log("filter: " + filter);
-    console.log(todos);
+    
     // Update currentFilter
     currentFilter = filter;
     // If filter is undone, return an array with only items that are not completed
