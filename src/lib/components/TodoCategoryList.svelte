@@ -31,7 +31,7 @@
 <section class="f-col">
   <h4 class="category-title">{readableCategoryName}</h4>
   <ul 
-    class="todo-list list-wrap gap-xs"
+    class="todo-list list-wrap gap-xxs"
     role="list"
     aria-labelledby="list-heading"
   >
