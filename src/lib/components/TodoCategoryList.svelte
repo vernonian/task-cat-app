@@ -53,8 +53,8 @@
 <style>
   .category-title {
     text-transform: uppercase;
-    font-size: var(--fontsize-body-xs);
-    font-weight: 600;
+    font-size: var(--fontsize-body-3);
+    font-weight: var(--fontweight-m);
   }
 
   .todo-list {

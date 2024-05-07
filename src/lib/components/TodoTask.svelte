@@ -206,6 +206,7 @@
 		padding: var(--xs);
     border: solid 1px transparent;
     border-radius: var(--xs);
+		font-size: var(--fontsize-body-2);
 		text-align: left;
 		width: 100%;
 		max-width: max-content;
@@ -226,7 +227,7 @@
 
   /* Target day & times per week */
   .target-day, .times-per-week  {
-		font-size: var(--fontsize-body-xs);
+		font-size: var(--fontsize-body-3);
     transition: var(--transi-color);
 	}
 

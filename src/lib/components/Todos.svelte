@@ -98,13 +98,16 @@
 <section class="section-wrap">
   <section class="content-wrap f-col gap-l">
     <div class="f-col gap-s">
-      <h1 class="heading-1">This Week's Tasks</h1>
-      <p>Done or undone, these tasks don’t sum up my self-worth 😸!</p>
+      <h1 class="heading-1">Weekly Tasks</h1>
+      <p>Done or undone, these tasks don’t sum up my self-worth.</p>
     </div>
 
     <div class="main-grid">
       <!-- Col 1 -->
       <div class="f-col todo-list">
+        <div class="f-col gap-s">
+          <h2 class="heading-2">The List</h2>
+        </div>
 
         <!-- NewTodoForm -->
         <NewTodoFrom 
@@ -148,7 +151,7 @@
 
       <!-- Col 3 -->
       <div class="f-col gap-s todo-about">
-        <pre class="heading-3">Mrow!</pre>      
+        <pre class="heading-3">😸 Mrow!</pre>      
         
         <details class="dropdown">
           <summary class="subheading-2">About Task Kat</summary>
@@ -172,7 +175,7 @@
 
 <style>
   .content-wrap {
-    max-width: var(--mw-l);
+    max-width: var(--mw-page);
     container-type: normal;
   }
 
@@ -192,22 +195,32 @@
   }
 
   /* Mid screen */
-  @container (min-width: 768px) {
+  @media screen and (min-width: 768px) {
     .main-grid {
       grid-template-columns: 2fr 1fr;
     grid-template-areas: 
       'list extras'
       'about extras';
+      gap: var(--l);
+    }
+
+    .todo-list {
+      border-right: solid 1px var(--neutral-3);
+      padding-right: var(--l);
     }
   }
 
   /* Wide screen */
-  @container (min-width: 1024px) {
+  @media screen and (min-width: 1024px) {
     .main-grid {
-      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-columns: 1.75fr 1fr 1fr;
       grid-template-areas: 
       'list extras about';
-      gap: var(--l);
+      gap: var(--xl);
+    }
+
+    .todo-list {
+      padding-right: var(--xl);
     }
   }
 
