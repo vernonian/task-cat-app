@@ -131,6 +131,6 @@
 
 <style>
   .content-wrap {
-    max-width: var(--maxwidth-l);
+    max-width: var(--mw-l);
   }
 </style>

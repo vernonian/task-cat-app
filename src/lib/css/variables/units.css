@@ -33,15 +33,15 @@
   --border-s: 1px solid currentcolor;
 
   /* Width Units */
-  --maxwidth-xxl: 96rem;
-  --maxwidth-xl:  72rem;
-  --maxwidth-l:   45rem;
-  --maxwidth-m:   36rem;
-  --maxwidth-s:   27rem;
-  --maxwidth-xs:  18rem;
-  --maxwidth-xxs: 9rem;
+  --mw-xxl: 96rem;
+  --mw-xl:  72rem;
+  --mw-l:   45rem;
+  --mw-m:   36rem;
+  --mw-s:   27rem;
+  --mw-xs:  18rem;
+  --mw-xxs: 9rem;
 
-  --maxwidth-page: 72rem;
+  --mw-page: 72rem;
 
   /* Time units */
   --time-l: 0.4s;
