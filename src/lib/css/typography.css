@@ -2,8 +2,9 @@
 /* Typographic variables and classes */
 
 :root {
+
   --fontfamily-serif: serif;
-  --fontfamily-sans: sans-serif;
+  --fontfamily-sans: "Inter", sans-serif;
   --fontfamily-mono: monospace;
 
   --lineheight-heading: 1.1;
@@ -16,22 +17,37 @@
   --fontweight-r:  400; /* Regular */
   --fontweight-l:  300; /* Light */
 
+  /* Heading and subheading sizes */
+  --fontsize-heading-1: 1.476rem;
+  --fontsize-heading-2: 1.383rem;
+  --fontsize-heading-3: 1.296rem;
+  --fontsize-heading-4: 1.215rem;
+  --fontsize-heading-5: 1.138rem;
+  --fontsize-heading-6: 1.067rem;
 
-  --fontsize-body-l: 1.125rem;
-  --fontsize-body-m: 1rem;
-  --fontsize-body-s: 0.83rem;
-  --fontsize-body-xs: 0.69rem;
+  /* Body sizes */
+  --fontsize-body-1: 1rem;
+  --fontsize-body-2: 0.937rem;
+  --fontsize-body-3: 0.878rem;
 }
 
 /* Reset */
 h1, h2, h3, h4, h5, h6,
-p, article, ul, ol {
+p, article, ul, ol, button, pre {
   margin: 0px;
+  font-family: inherit;
 }
+
+
 body {
   font-family: var(--fontfamily-sans);
   font-size: var(----fontsize-body-m);
-  color: var(--textcolor-body);
+  font-optical-sizing: auto;
+  font-weight: var(--fontweight-r);
+  font-style: normal;
+  font-variation-settings:
+    "slnt" 0;
+    color: var(--textcolor-body);
 }
 
 /* Display styles */
@@ -52,38 +68,33 @@ body {
   color: var(--textcolor-heading);
 }
 
-.heading-1, .heading-2, .heading-3 {font-weight: 600;}
-.heading-4, .heading-5, .heading-6 {font-weight: 500;}
+.heading-1, .heading-2, .heading-3 {font-weight: var(--fontweight-m);}
+.heading-4, .heading-5, .heading-6 {font-weight: var(--fontweight-m);}
 
-.heading-1, .h1 {font-size: 2.986rem;}
-.heading-2, .h2 {font-size: 2.488rem;}
-.heading-3, .h3 {font-size: 2.074rem;}
-.heading-4, .h4 {font-size: 1.728rem;}
-.heading-5, .h5 {font-size: 1.44rem;}
-.heading-6, .h6 {font-size: 1.2rem;}
+.heading-1, .h1 {font-size: var(--fontsize-heading-1);}
+.heading-2, .h2 {font-size: var(--fontsize-heading-2);}
+.heading-3, .h3 {font-size: var(--fontsize-heading-3);}
+.heading-4, .h4 {font-size: var(--fontsize-heading-4);}
+.heading-5, .h5 {font-size: var(--fontsize-heading-5);}
+.heading-6, .h6 {font-size: var(--fontsize-heading-6);}
+
+/* Subheading styles */
+.subheading-1, .subheading-2 {
+  font-weight: var(--fontweight-r);
+}
+
+.subheading-1 {font-size: var(--fontsize-heading-5);}
+.subheading-2 {font-size: var(--fontsize-heading-6);}
 
 /* Body styles */
-.body-l, .body-m, .body-s, .body-xs {
+.body-1, .body-2, .body-3 {
   line-height: var(--lineheight-body);
   font-weight: var(--fontweight-r);
 }
 
-.body-1 {font-size: 1rem;}
-.body-2 {font-size: 0.83rem;}
-.body-3 {font-size: 0.69rem}
-
-@media screen and (max-width: 768px) {
-  .display-1 {font-size: 3.815rem;}
-  .display-2 {font-size: 3.052rem;}
-  .display-3 {font-size: 2.441rem;}
-
-  .heading-1, .h1 {font-size: 2.027rem;}
-  .heading-2, .h2 {font-size: 1.802rem;}
-  .heading-3, .h3 {font-size: 1.602rem;}
-  .heading-4, .h4 {font-size: 1.424rem;}
-  .heading-5, .h5 {font-size: 1.266rem;}
-  .heading-6, .h6 {font-size: 1.125rem;}
-}
+.body-1 {font-size: var(--fontsize-body-1);}
+.body-2 {font-size: var(--fontsize-body-2);}
+.body-3 {font-size: var(--fontsize-body-3);}
 
 /* Alignment */
 .text-left { text-align: left; }

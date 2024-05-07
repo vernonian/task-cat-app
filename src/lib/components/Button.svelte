@@ -56,7 +56,7 @@
   }
 
   /* Primary */
-  .primary, .visually-active {
+  .primary {
     background-color: var(--primary-5);
     color: var(--white);
 
@@ -66,6 +66,19 @@
 
     &:active {
       background-color: var(--primary-6);
+    }
+  }
+
+  .visually-active {
+    background-color: var(--interactive-3);
+    color: var(--white);
+
+    &:hover {
+      background-color: var(--interactive-4);
+    }
+
+    &:active {
+      background-color: var(--interactive-5);
     }
   }
 

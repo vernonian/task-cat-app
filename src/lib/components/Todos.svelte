@@ -98,7 +98,7 @@
 <section class="section-wrap">
   <section class="content-wrap f-col gap-l">
     <div class="f-col gap-s">
-      <h1 class="heading-4">This Week's Tasks</h1>
+      <h1 class="heading-1">This Week's Tasks</h1>
       <p>Done or undone, these tasks don’t sum up my self-worth 😸!</p>
     </div>
 
@@ -125,8 +125,7 @@
       <!-- Col 2 -->
       <div class="f-col todo-extras">
         <div class="f-col gap-s">
-          <h2 class="heading-4">WEEK DATE RANGE</h2>
-          <p>Done or undone, these tasks don’t sum up my self-worth 😸!</p>
+          <h2 class="heading-2">WEEK DATE RANGE</h2>
         </div>
 
         <!-- Status -->
