@@ -45,7 +45,7 @@
       />
     </li>      
     {:else}
-      <li>Nothing to do!</li>
+      <li>😺 No tasks in this kat-egory! 😺</li>
   {/each}
   </ul>
 </section>

@@ -7,6 +7,7 @@
 	import NewTodoFrom from "./NewTodoFrom.svelte";
 	import TodosStatus from "./TodosStatus.svelte";
 	import TodoCategoryList from "./TodoCategoryList.svelte";
+	import DashboardHeader from "./DashboardHeader.svelte";
 
   // Props
   export let todos:TodoTaskType[];
@@ -97,10 +98,7 @@
 
 <section class="section-wrap">
   <section class="content-wrap f-col gap-l">
-    <div class="f-col gap-s">
-      <h1 class="heading-1">Weekly Tasks</h1>
-      <p>Done or undone, these tasks don’t sum up my self-worth.</p>
-    </div>
+    <DashboardHeader/>
 
     <div class="main-grid">
       <!-- Col 1 -->
@@ -127,15 +125,14 @@
 
       <!-- Col 2 -->
       <div class="f-col todo-extras">
-        <div class="f-col gap-s">
-          <h2 class="heading-2">WEEK DATE RANGE</h2>
-        </div>
-
+        <h2 class="heading-2">WEEK DATE RANGE</h2>
+        
         <!-- Status -->
         <TodosStatus 
           bind:this={todosStatus} 
           todos={todos} />
 
+        <!-- Filters -->
         <FilterButtons 
           bind:filter = {currentFilter}
           on:filter={ (e) => {filterTodoItems(e.detail, todos)}}
@@ -149,10 +146,9 @@
         />
       </div>
 
-      <!-- Col 3 -->
+      <!-- Col 3 todo: componentize this -->
       <div class="f-col gap-s todo-about">
-        <pre class="heading-3">😸 Mrow!</pre>      
-        
+        <h3 class="heading-3">😸 Mrow!</h3>      
         <details class="dropdown">
           <summary class="subheading-2">About Task Kat</summary>
           <div class="f-col details-content">
@@ -169,7 +165,6 @@
           </div>
       </div>
     </div>
-    
   </section>
 </section>
 

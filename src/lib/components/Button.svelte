@@ -9,7 +9,6 @@
 
 </script>
 
-
 <button
   id={id}
   class="{$$props.class} secondary"
@@ -22,7 +21,6 @@
 </button>
 
 <style>
-
   /* Base styling */
   button {
     padding: var(--s);
@@ -38,9 +36,6 @@
       outline-offset: 1px;
     }
   }
-
-
-
 
   /* Default */
   .default, .secondary {
