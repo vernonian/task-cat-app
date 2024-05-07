@@ -96,41 +96,123 @@
 
 
 <section class="section-wrap">
-  <section class="content-wrap">
-    <h1>Task Kat</h1>
-    <FilterButtons 
-      bind:filter = {currentFilter}
-      on:filter={ (e) => {filterTodoItems(e.detail, todos)}}
-    />
-    <!-- MoreActions -->
-    <MoreActions 
-      todos={todos}
-      on:checkAll={ (e) => {checkAllTasks(e.detail)} }
-      on:removeCompleted={removeCompletedTasks}
-    />
-    <!-- NewTodoForm -->
-    <NewTodoFrom 
-      autofocus={true}
-      on:addTodoTask={ (e) => addTodoItem(e.detail) }
-    />
-    <!-- Status -->
-    <TodosStatus 
-      bind:this={todosStatus} 
-      todos={todos} />
+  <section class="content-wrap f-col gap-l">
+    <div class="f-col gap-s">
+      <h1 class="heading-4">This Week's Tasks</h1>
+      <p>Done or undone, these tasks don’t sum up my self-worth 😸!</p>
+    </div>
 
-    <!-- Todo list: for each category, render a categorized todo list -->
-    {#each categories as category}
-    <!-- Pass the filtered array (result of filteredTodoItems() function) as the todos prop -->
-      <TodoCategoryList category={category} todos={ filterTodoItems(currentFilter, todos) } 
-        on:remove={(e) => removeTodo(e.detail)}
-        on:update={(e) => updateTodoItem(e.detail)}
-      />
-    {/each}
+    <div class="main-grid">
+      <!-- Col 1 -->
+      <div class="f-col todo-list">
+
+        <!-- NewTodoForm -->
+        <NewTodoFrom 
+          autofocus={true}
+          on:addTodoTask={ (e) => addTodoItem(e.detail) }
+        />
+        
+        <!-- Todo list: for each category, render a categorized todo list -->
+        {#each categories as category}
+        <!-- Pass the filtered array (result of filteredTodoItems() function) as the todos prop -->
+          <TodoCategoryList category={category} todos={ filterTodoItems(currentFilter, todos) } 
+            on:remove={(e) => removeTodo(e.detail)}
+            on:update={(e) => updateTodoItem(e.detail)}
+          />
+        {/each}
+      </div>
+
+      <!-- Col 2 -->
+      <div class="f-col todo-extras">
+        <div class="f-col gap-s">
+          <h2 class="heading-4">WEEK DATE RANGE</h2>
+          <p>Done or undone, these tasks don’t sum up my self-worth 😸!</p>
+        </div>
+
+        <!-- Status -->
+        <TodosStatus 
+          bind:this={todosStatus} 
+          todos={todos} />
+
+        <FilterButtons 
+          bind:filter = {currentFilter}
+          on:filter={ (e) => {filterTodoItems(e.detail, todos)}}
+        />
+
+        <!-- MoreActions -->
+        <MoreActions 
+          todos={todos}
+          on:checkAll={ (e) => {checkAllTasks(e.detail)} }
+          on:removeCompleted={removeCompletedTasks}
+        />
+      </div>
+
+      <!-- Col 3 -->
+      <div class="f-col gap-s todo-about">
+        <pre class="heading-3">Mrow!</pre>      
+        
+        <details class="dropdown">
+          <summary class="subheading-2">About Task Kat</summary>
+          <div class="f-col details-content">
+            <p>Add a task by giving it an actionable or identifiable name.</p>
+            <p>You can give it optional organizational labels:</p>
+            <ul class="list-wrap">
+              <li>a target day of completion</li>
+              <li>a number of times you plan to do the task</li>
+              <li>a task category type</li>
+              <li>a flag if the task is to repeat every week</li>
+            </ul>
+            <p>This list will reset on Mondays at 5 a.m. changing all task from 'done' to 'undone'.</p>
+            <p>It will keep all tasks marked as repeating weekly and remove the others. </p>
+          </div>
+      </div>
+    </div>
+    
   </section>
 </section>
 
 <style>
   .content-wrap {
     max-width: var(--mw-l);
+    container-type: normal;
+  }
+
+  .todo-list { grid-area: list; }
+  .todo-extras { grid-area: extras; }
+  .todo-about{ grid-area: about; }
+
+  /* Small screen */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+      'extras'
+      'list'
+      'about';
+    gap: var(--m);
+  }
+
+  /* Mid screen */
+  @container (min-width: 768px) {
+    .main-grid {
+      grid-template-columns: 2fr 1fr;
+    grid-template-areas: 
+      'list extras'
+      'about extras';
+    }
+  }
+
+  /* Wide screen */
+  @container (min-width: 1024px) {
+    .main-grid {
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-areas: 
+      'list extras about';
+      gap: var(--l);
+    }
+  }
+
+  .details-content {
+    padding: var(--m);
   }
 </style>
