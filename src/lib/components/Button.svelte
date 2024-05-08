@@ -1,4 +1,5 @@
 <script lang="ts">
+
   //Props
   export let id:string;
   export let type: 'button' | 'submit' = 'button';
@@ -6,16 +7,19 @@
   export let onClick:any;
   export let usage: 'default' | 'primary' | 'secondary' | 'danger' | 'ghost' = 'default';
   export let visuallyActive:boolean = false;
+  export let disabled:boolean = false;
+
 
 </script>
 
 <button
   id={id}
-  class="{$$props.class} secondary"
+  class="{usage} {$$props.class} secondary"
   class:visually-active={visuallyActive}
   type={type}
   aria-pressed={ariaPressed}
   on:click={onClick}
+  disabled={disabled}
 >
   <slot></slot>
 </button>
@@ -34,6 +38,12 @@
     &:focus {
       outline: dashed 2px var(--interactive-5);
       outline-offset: 1px;
+    }
+
+    &:disabled,  &:disabled:hover {
+      background-color: var(--neutral-1);
+      color: var(--neutral-6);
+      cursor: not-allowed;
     }
   }
 
@@ -65,15 +75,15 @@
   }
 
   .visually-active {
-    background-color: var(--interactive-3);
-    color: var(--white);
+    background-color: var(--primary-2);
+    color: var(--black);
 
     &:hover {
-      background-color: var(--interactive-4);
+      background-color: var(--primary-3);
     }
 
     &:active {
-      background-color: var(--interactive-5);
+      background-color: var(--primary-4);
     }
   }
 

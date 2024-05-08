@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { TodoTaskType } from "$lib/types/TodoTask";
   import { createEventDispatcher } from "svelte";
+  import Button from "$lib/components/Button.svelte";
   const dispatch = createEventDispatcher();
 
   // Props
@@ -23,26 +24,23 @@
   }
 </script>
 
-<section class="more-actions">
-  <div>
-    <button
-      on:click={checkAll}
-      class="btn"
+<section class="more-actions f-col gap-xs">
+  <h4 class="body-1">List Actions</h4>
+  <div class="f-row gap-xxs">
+    <Button 
+      id="toggle-all-button"
       type="button"
+      usage="default"
+      onClick={checkAll}
       disabled={todos.length === 0}
-    >{completed? 'Check' : 'Uncheck'} All</button>
-    <button 
-    class="btn"
-      on:click={removeCompleted}
+    >{completed? 'Check' : 'Uncheck'} All</Button>
+
+    <Button 
+      id="remove-completed-button"
       type="button"
+      usage="default"
+      onClick={removeCompleted}
       disabled={completedTodoTasks === 0}
-      >Remove Completed</button>
+    >Remove Completed</Button>
   </div>
 </section>
-
-<style>
-.more-actions .btn {
-  padding: var(--xs);
-}
-
-</style>
