@@ -1,36 +1,23 @@
 <script lang="ts">
 	import Button from "./Button.svelte";
-	import { fade } from "svelte/transition";
-
 
   // Props
   export let modalId:string;
   export let showModal:boolean = false;
 
-
+  // Scoped variables
   let dialog:HTMLDialogElement; // Reference to dialog element
   let modalVisible:boolean = false; // Boolean to control in-out animation
-  let modalAnimationDuration:number = 200;
+  const modalAnimationDuration:number = 200;  // Animation duration (ms)
 
   $: if (dialog && showModal) {
     dialog.showModal();
-    // dialog.classList.add('opened');
-    // Set modalVisible to true so the modal appears
+
+    // Set modalVisible to true so the modal appears and transitions
     modalVisible = true;
   }
 
-  // $: setTimeout(() = > {}, 200);
-
-
-
-  function openModalHanlder() {
-    showModal = true;
-  }
-
   function closeModalHandler() {
-    // Add timeout to allow for animating out
-    // dialog.classList.remove('opened');
-
     // Set modalVisible to true to trigger animation
     modalVisible = false;
 
@@ -39,10 +26,7 @@
       showModal = false;
       dialog.close();
     }, modalAnimationDuration);
-    
-    
   }
-
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
@@ -64,7 +48,6 @@
       onClick={closeModalHandler}
     >Cancel</Button>
 	</div>
-  
 </dialog>
 
 <style>
@@ -82,7 +65,6 @@
     background-color: (--black);
   }
 
-  /* Transitions */
   /* Defauly (closed) state */
   dialog, dialog::backdrop {
     opacity: 0;

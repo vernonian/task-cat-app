@@ -5,7 +5,7 @@
   import { selectAllTextOnFocus  } from "$lib/actions";
 	import Button from "./Button.svelte";
 	import Modal from "./Modal.svelte";
-  
+
 
   export let autofocus:boolean = false;
 
@@ -31,9 +31,8 @@
   // If autofocus is true, focus the element
   onMount( () => autofocus && nameInputElement.focus() );
 
-  // Dispatch "openModal" event to open corresponding modal
+  // Open the modal by updating the showModal prop (bound to Modal component)
   function onOpenModal() {
-    // dispatch('openModal');
     showModal = true;
   }
 </script>
