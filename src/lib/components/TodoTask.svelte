@@ -237,7 +237,7 @@
 	}
 
 	.repeats-weekly label {
-    fill: var(--gray-5);
+    fill: var(--neutral-5);
 		transition: var(--transi-fill);
 	}
 

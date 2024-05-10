@@ -18,10 +18,10 @@
   
   // Props
   export let todosLength:number;  // Used ot generate newTodoTask's id
-  export let autofocus:boolean = false;
+  // export let autofocus:boolean = false;
 
   // Property to control modal, bound to Modal's prop
-  let showModal:boolean = true;
+  $: showModal = true;
 
   // This property will be passed to parent component via event emission
   let newTodoTask:TodoTaskType = {
@@ -36,9 +36,11 @@
 
   // let name:string = '';
   // let nameInputElement:any; // Reference to the input element DOM node
+  let categoryInput:any; //Reference to select input element
 
   // Form variables
   let selectedCategoryValue:TodoTaskCategoriesType;
+  let addAnother:boolean = false; // Used to control modal behavior after form submit
 
   function resetNewTodoTask() {
     newTodoTask = {
@@ -57,15 +59,18 @@
    * TODO
    * Bug -> id is not being updated as when form is submitted multiple times
    * Repeat weekyl indicator is not showing
-   * Close modal when form is submitted
    * reset all form elements to default when submitted
-   * Fix abbreviation bug when target day is 'any'/'none
    *
    */
 
   function addTodoTask() {
     dispatch('addTodoTask', newTodoTask);
     resetNewTodoTask();
+    // console.log(addAnother);
+    if (!addAnother) {
+      showModal = false;
+      console.log(showModal);
+    }
     // nameInputElement.focus(); // Give this element focus
   }
 
@@ -80,6 +85,10 @@
   // Open the modal by updating the showModal prop (bound to Modal component)
   function onOpenModal() {
     showModal = true;
+  }
+
+  function onCloseModal() {
+    
   }
 
   /* Setter functions for creating new todo task object */
@@ -99,7 +108,6 @@
     newTodoTask.dayTarget = x;
   }
 
-  $: console.log("selectedCategoryValue: " + selectedCategoryValue);
   $: () => { console.log("newTodoTask:"); console.log(newTodoTask)}
 
 </script>
@@ -137,8 +145,8 @@
       <div class="f-col">
         <label for="category">What's this task's category?</label>
         <select 
-          on:change={e => updateCategory(selectedCategoryValue)}
-          bind:value={selectedCategoryValue} 
+          on:change={e => updateCategory(categoryInput.value)}
+          bind:this={categoryInput} 
           name="category" 
           id="category"
           required>
@@ -210,6 +218,17 @@
           </div>
             
         </fieldset>
+      </div>
+
+      <!-- Add another task after form submit? (keeps modal open) -->
+      <div class="f-row gap-s">
+        <input 
+          bind:value={addAnother}
+          type="checkbox"
+          id="add-another" 
+          name="add-another"/>
+        <label for="add-another">Add another task</label>
+       
       </div>
         
         <button 

@@ -10,15 +10,18 @@
   let modalVisible:boolean = false; // Boolean to control in-out animation
   const modalAnimationDuration:number = 200;  // Animation duration (ms)
 
+  // Watch for change to show modal
   $: if (dialog && showModal) {
     dialog.showModal();
-
     // Set modalVisible to true so the modal appears and transitions
     modalVisible = true;
   }
 
+  // Watch for change to close modal
+  $: if(!showModal) { closeModalHandler(); }
+
   function closeModalHandler() {
-    // Set modalVisible to true to trigger animation
+    // Visibly close modal to trigger animation
     modalVisible = false;
 
     // Technically close the dialog after timeout to account for animation
