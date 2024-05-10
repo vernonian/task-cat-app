@@ -3,7 +3,7 @@
 
   // Props
   export let modalId:string;
-  export let showModal:boolean = false;
+  export let showModal:boolean = true;
 
   // Scoped variables
   let dialog:HTMLDialogElement; // Reference to dialog element

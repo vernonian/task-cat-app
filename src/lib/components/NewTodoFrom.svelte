@@ -1,40 +1,107 @@
 <script lang="ts">
+  // Types
+  import type {DaysType} from "$lib/types/DaysType";
+  import type { TodoTaskType } from "$lib/types/TodoTask";
+  import type {TodoTaskCategoriesType} from "$lib/types/TodoTaskCategoriesType";
+  // Svelte
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
-  import { onMount } from "svelte";
+  // Sample Data
+  import CATEGORIES from "$lib/sampleCategories";
+  // Components
   import { selectAllTextOnFocus  } from "$lib/actions";
 	import Button from "./Button.svelte";
 	import Modal from "./Modal.svelte";
-
-
+	import TextInput from "./inputs/TextInput.svelte";
+	import DayOfWeekSelector from "./inputs/DayOfWeekSelector.svelte";
+	import ToggleButton from "./inputs/ToggleButton.svelte";
+  
+  // Props
+  export let todosLength:number;  // Used ot generate newTodoTask's id
   export let autofocus:boolean = false;
 
   // Property to control modal, bound to Modal's prop
-  let showModal:boolean = false;
+  let showModal:boolean = true;
 
-  let name:string = '';
-  let nameInputElement:any; // Reference to the input element DOM node
+  // This property will be passed to parent component via event emission
+  let newTodoTask:TodoTaskType = {
+    id: todosLength,
+    name: '',
+    completed: false,
+    tag: 'default',
+    repeatsWeekly: false,
+    timesPerWeek: 1,
+    category: 'misc',
+  };
 
-  function resetName() { name = '' };
+  // let name:string = '';
+  // let nameInputElement:any; // Reference to the input element DOM node
+
+  // Form variables
+  let selectedCategoryValue:TodoTaskCategoriesType;
+
+  function resetNewTodoTask() {
+    newTodoTask = {
+      id: todosLength,
+      name: '',
+      completed: false,
+      tag: 'default',
+      repeatsWeekly: false,
+      timesPerWeek: 1,
+      category: 'misc',
+      dayTarget: undefined
+    }
+  }
+
+  /**
+   * TODO
+   * Bug -> id is not being updated as when form is submitted multiple times
+   * Repeat weekyl indicator is not showing
+   * Close modal when form is submitted
+   * reset all form elements to default when submitted
+   * Fix abbreviation bug when target day is 'any'/'none
+   *
+   */
 
   function addTodoTask() {
-    dispatch('addTodoTask', name);
-    resetName();
-    nameInputElement.focus(); // Give this element focus
+    dispatch('addTodoTask', newTodoTask);
+    resetNewTodoTask();
+    // nameInputElement.focus(); // Give this element focus
   }
 
   function onCancel() {
-    resetName();
-    nameInputElement.focus(); // Give this element focus
+    resetNewTodoTask();
+    // nameInputElement.focus(); // Give this element focus
   }
  
   // If autofocus is true, focus the element
-  onMount( () => autofocus && nameInputElement.focus() );
+  // onMount( () => autofocus && nameInputElement.focus() );
 
   // Open the modal by updating the showModal prop (bound to Modal component)
   function onOpenModal() {
     showModal = true;
   }
+
+  /* Setter functions for creating new todo task object */
+
+  // Updates newTodoTask's category property based on event listener
+  function updateCategory(x:TodoTaskCategoriesType) {
+    newTodoTask.category = x;
+  }
+
+  // Updates newTodoTask's repeatsWeekly property based on event listener
+  function updateRepeatsWeeky(x:boolean) {
+    newTodoTask.repeatsWeekly = x;
+  }
+
+  // Updates targetDayValue based on component event listener
+  function updateTargetDay(x:DaysType) {
+    newTodoTask.dayTarget = x;
+  }
+
+  $: console.log("selectedCategoryValue: " + selectedCategoryValue);
+  $: () => { console.log("newTodoTask:"); console.log(newTodoTask)}
+
 </script>
 
 <Button
@@ -46,26 +113,109 @@
   Add Task Item</Button>
   <Modal modalId="new-task-modal" bind:showModal>
     <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
-
-    <form
-      on:submit|preventDefault={addTodoTask}
-      on:keydown={(e) => e.key === 'Escape' && onCancel()}
-      class="f-col"
+    <section>
+      <h2 class="heading-2">Create New Task</h2>
+      <form
+        on:submit|preventDefault={addTodoTask}
+        on:keydown={(e) => e.key === 'Escape' && onCancel()}
+        class="f-col"
       >
-      <h2><label for="todo-0">What to do?</label></h2>
-      <div class="f-row">
-        <input 
-          bind:value={name}
-          bind:this={nameInputElement}
-          use:selectAllTextOnFocus
+      <div class="f-col">
+        <label for="todo-0">What's the task?</label>
+        <TextInput bind:value={newTodoTask.name}
+          action={selectAllTextOnFocus}
           class="text-input"
           type="text" 
-          name="todo-0" 
+          id="todo-0" 
+          name="todo-0"
+          placeholder="Scoop the litterbox "
           autocomplete="off"
         />
+      </div>
+
+      <!-- Category -->
+      <div class="f-col">
+        <label for="category">What's this task's category?</label>
+        <select 
+          on:change={e => updateCategory(selectedCategoryValue)}
+          bind:value={selectedCategoryValue} 
+          name="category" 
+          id="category"
+          required>
+          {#each CATEGORIES as category}
+            <option value={category}>{category[0].toUpperCase() + category.substring(1)}</option>
+          {/each}
+        </select>
+      </div>
+
+      <!-- Repeats Weekly -->
+      <div class="f-col">
+        <label for="new-task-times-per-week">Will this task repeat weekly?</label>
+        <ToggleButton 
+          name="new-task-repeats-weekly"
+          option1="No"
+          option2="Yes"
+          on:onToggleButtonChange={e => updateRepeatsWeeky(e.detail)}
+        />
+      </div>
+
+      <!-- Target Day -->
+      <div class="f-col">
+        <label for="category">What day do you plan to complete this task?</label>
+        <!-- Bind each input to a group -->
+        <fieldset class="f-row gap-xs f-c-s">
+          <DayOfWeekSelector 
+            name="new-task-target-day"
+            dayOfWeekValue="sunday"  
+            type="radio" 
+            on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
+          <DayOfWeekSelector 
+            name="new-task-target-day"
+            dayOfWeekValue="monday"  
+            type="radio"
+            on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
+          <DayOfWeekSelector 
+            name="new-task-target-day"
+            dayOfWeekValue="tuesday"  
+            type="radio"
+            on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
+          <DayOfWeekSelector 
+            name="new-task-target-day"
+            dayOfWeekValue="wednesday"  
+            type="radio"
+            on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
+          <DayOfWeekSelector 
+            name="new-task-target-day"
+            dayOfWeekValue="thursday"  
+            type="radio"
+            on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
+          <DayOfWeekSelector 
+            name="new-task-target-day"
+            dayOfWeekValue="friday"  
+            type="radio"
+            on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
+          <DayOfWeekSelector 
+            name="new-task-target-day"
+            dayOfWeekValue="saturday"  
+            type="radio"
+            on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
+          <div>
+            <input 
+              type="radio"
+              name="new-task-target-day"
+              id="no-target-day"
+              value="no-target-day"
+              on:change={e => updateTargetDay('any')}/>
+            <label for="no-target-day">None</label>
+          </div>
+            
+        </fieldset>
+      </div>
+        
         <button 
-          disabled={!name}
-          type="submit">Add</button>
-      </div>  
+          disabled={!newTodoTask.name}
+          type="submit">Add</button> 
     </form>
+  </section>
+    
 </Modal>

@@ -1,4 +1,5 @@
-
+import type {DaysType} from "$lib/types/DaysType";
+import type {TodoTaskCategoriesType} from "$lib/types/TodoTaskCategoriesType";
 
 export interface TodoTask {
   id:number,
@@ -7,8 +8,8 @@ export interface TodoTask {
   tag: 'default' | 'urgent' | 'optional' | 'ambitious' | 'unplanned',
   repeatsWeekly:boolean,
   timesPerWeek?:number,
-  category: 'house' | 'body' | 'mind' | 'spirit' | 'social' | 'misc',
-  dayTarget?: 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday',
+  category:TodoTaskCategoriesType,
+  dayTarget?: DaysType,
 }
 
 export type TodoTaskType = TodoTask;

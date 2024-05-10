@@ -8,6 +8,7 @@
 	import TodosStatus from "./TodosStatus.svelte";
 	import TodoCategoryList from "./TodoCategoryList.svelte";
 	import DashboardHeader from "./DashboardHeader.svelte";
+  import CATEGORIES from "$lib/sampleCategories";
 
   // Props
   export let todos:TodoTaskType[];
@@ -16,9 +17,6 @@
   let currentFilter:string = 'all'; // bound to <FilterButtons>
   let newTodoName:string = '';
   let newTodoId:number;
-
-  const categories:string[] = ['house','body','mind','hobbies','social','misc'];
-
 
   // Reactive variables
   $: newTodoId = todos.length ? Math.max(...todos.map( (t) => t.id + 1)) : 1;
@@ -46,16 +44,9 @@
   }
 
   /* Adds a todo item to the todos array. */
-  function addTodoItem(newTodoName:string) {   
-    let itemToAdd:TodoTaskType = {
-      id: newTodoId,
-      name: newTodoName,
-      completed: false,
-      tag: 'default',
-      repeatsWeekly: false,
-      timesPerWeek: 1,
-      category: 'misc',
-    }
+  function addTodoItem(newTodoTask:TodoTaskType) {   
+    let itemToAdd:TodoTaskType = newTodoTask;
+
     // Add the new TodoTaskType item to the todos array
     todos = [...todos, itemToAdd];
   }
@@ -92,7 +83,7 @@
     });
   }
 
-  // $: console.log(todos);
+  $: console.log(todos);
 </script>
 
 
@@ -109,12 +100,13 @@
 
         <!-- NewTodoForm -->
         <NewTodoFrom 
+          todosLength={newTodoId}
           autofocus={true}
           on:addTodoTask={ (e) => addTodoItem(e.detail) }
         />
         
         <!-- Todo list: for each category, render a categorized todo list -->
-        {#each categories as category}
+        {#each CATEGORIES as category}
         <!-- Pass the filtered array (result of filteredTodoItems() function) as the todos prop -->
           <TodoCategoryList category={category} todos={ filterTodoItems(currentFilter, todos) } 
             on:remove={(e) => removeTodo(e.detail)}

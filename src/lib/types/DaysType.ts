@@ -1,0 +1,1 @@
+export type DaysType = 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday'| 'any' | undefined;
