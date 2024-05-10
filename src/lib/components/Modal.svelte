@@ -1,9 +1,10 @@
 <script lang="ts">
+  // Components
 	import Button from "./Button.svelte";
 
   // Props
   export let modalId:string;
-  export let showModal:boolean = true;
+  export let showModal:boolean = false; // Don't show modal by default
 
   // Scoped variables
   let dialog:HTMLDialogElement; // Reference to dialog element
@@ -13,16 +14,16 @@
   // Watch for change to show modal
   $: if (dialog && showModal) {
     dialog.showModal();
-    // Set modalVisible to true so the modal appears and transitions
-    modalVisible = true;
+    modalVisible = true;  // Set modalVisible to true to trigger animation
   }
 
   // Watch for change to close modal
   $: if(!showModal) { closeModalHandler(); }
 
+  // Helper function to handle closing the modal
   function closeModalHandler() {
-    // Visibly close modal to trigger animation
-    modalVisible = false;
+    
+    modalVisible = false; // Visibly close modal to trigger animation
 
     // Technically close the dialog after timeout to account for animation
     setTimeout(() => {
@@ -40,7 +41,7 @@
   on:click={closeModalHandler}
   >
   <!-- svelte-ignore a11y-no-static-element-interactions -->
-	<div class="f-col" on:click|stopPropagation>
+	<div class="f-col f-s-s" on:click|stopPropagation>
 		<slot></slot>
 
 		<!-- svelte-ignore a11y-autofocus -->

@@ -58,7 +58,6 @@
   /**
    * TODO
    * Bug -> id is not being updated as when form is submitted multiple times
-   * Repeat weekyl indicator is not showing
    * reset all form elements to default when submitted
    *
    */
@@ -87,10 +86,6 @@
     showModal = true;
   }
 
-  function onCloseModal() {
-    
-  }
-
   /* Setter functions for creating new todo task object */
 
   // Updates newTodoTask's category property based on event listener
@@ -108,7 +103,7 @@
     newTodoTask.dayTarget = x;
   }
 
-  $: () => { console.log("newTodoTask:"); console.log(newTodoTask)}
+  // $: () => { console.log("newTodoTask:"); console.log(newTodoTask)}
 
 </script>
 
