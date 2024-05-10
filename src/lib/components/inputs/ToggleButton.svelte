@@ -7,34 +7,25 @@
    * The toggle button is used to make a boolean selection in relation to a form field.
    * It contains two radio buttons. The first is the 'false' value; the second is the 'true' value.
    * When either of the inputs change, it will emit a custom event, named 'onToggleButtonChange'
-   */
+  */
 
-  // Props
-  /**
-   * groupName:string - Used to group the inputs
-   */
-  export let name:string;
-  export let option1:string = 'No';
-  export let option2: string = 'Yes';
+  /* #=# Props #=# */
+  export let name:string; // Used to group the inputs
+  export let option1:string = 'No';   // Text for the 'false' option
+  export let option2: string = 'Yes'; // Text for the 'true' option
+  export let initialSelection:boolean = false;
 
-  let selected:any;
-  let option1Name:string = name + "-" + option1;
-  let option2Name:string = name + "-" + option2;
-  // export let onChange;
+  /* #=# Scoped Variables #=# */
+  let selected:boolean = initialSelection;
+  let option1Name:string = name + "-" + option1;  // Used to link label and input
+  let option2Name:string = name + "-" + option2;  // Used to link label and input
 
+  /* #=# Functions #=# */
+  // Emit custom event and pass in the selected value
   function onChange() {
     dispatch('onToggleButtonChange', selected);
+    console.log(selected);
   }
-
-  /*
-  fieldset needs a grouping id
-  label need to match input id
-  inputs need name to mamtch grouping id
-
-  emit an event to update parent component's value?
-
-
-  */
 </script>
 
 <fieldset class="toggle-button-group">
@@ -43,7 +34,7 @@
       id={option1Name} 
       name={name}
       type="radio"
-      value="false"
+      value={false}
       bind:group={selected}
       on:change={onChange}>
     <label for={option1Name}>{option1}</label>
@@ -54,7 +45,7 @@
       id={option2Name}
       name={name}
       type="radio"
-      value="true"
+      value={true}
       bind:group={selected}
       on:change={onChange}>
     <label for={option2Name}>{option2}</label>
