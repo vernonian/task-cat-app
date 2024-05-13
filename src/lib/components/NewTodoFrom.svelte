@@ -19,14 +19,18 @@
   
   // Props
   export let todosLength:number;  // Used ot generate newTodoTask's id
+
+  
+
   // export let autofocus:boolean = false;
 
   // Property to control modal, bound to Modal's prop
   $: showModal = true;
+  $: nextTodoId = todosLength + 1;
 
   // This property will be passed to parent component via event emission
   let newTodoTask:TodoTaskType = {
-    id: todosLength,
+    id: nextTodoId,
     name: '',
     completed: false,
     tag: 'default',
@@ -35,20 +39,21 @@
     category: 'misc',
   };
 
-  // let name:string = '';
-  // let nameInputElement:any; // Reference to the input element DOM node
-  let categoryInput:any; //Reference to select input element
-
   // Form variables
-  let newTodoForm:HTMLFormElement;
-  let selectedCategoryValue:TodoTaskCategoriesType;
+  let newTodoForm:HTMLFormElement; // Reference to the form element
   let addAnother:boolean = false; // Used to control modal behavior after form submit
-  let categoryNameString:string = 'category';
+
+  // Strings to pair input and labels, mapped to the 'for', 'name', and 'id' attributes
+  let taskNameString:string = 'new-task-name'
+  let categoryNameString:string = 'new-task-category';
+  let repeatsWeeklyNameString:string = 'new-task-repeats-weekly'
+  let targetDayNameString:string = 'new-task-target-day'; 
+  let addAnotherNameString:string = 'add-another';
   
 
   function resetNewTodoTask() {
     newTodoTask = {
-      id: todosLength,
+      id: nextTodoId,
       name: '',
       completed: false,
       tag: 'default',
@@ -69,10 +74,9 @@
   function addTodoTask() {
     dispatch('addTodoTask', newTodoTask);
     resetNewTodoTask();
-    // console.log(addAnother);
+  
     if (!addAnother) {
       showModal = false;
-      console.log(showModal);
     }
     // nameInputElement.focus(); // Give this element focus
   }
@@ -95,7 +99,6 @@
   // Updates newTodoTask's category property based on event listener
   function updateCategory(category:TodoTaskCategoriesType) {
     newTodoTask.category = category;
-    console.log(newTodoTask.category);
   }
 
   // Updates newTodoTask's repeatsWeekly property based on event listener
@@ -107,9 +110,6 @@
   function updateTargetDay(targetDay:DaysType) {
     newTodoTask.dayTarget = targetDay;
   }
-
-  // $: () => { console.log("newTodoTask:"); console.log(newTodoTask)}
-
 </script>
 
 <Button
@@ -132,13 +132,13 @@
 
         <!-- Task Name -->
         <div class="f-col gap-xs">
-          <label for="todo-0">What's the task?</label>
+          <label for={taskNameString}>What's the task?</label>
           <TextInput bind:value={newTodoTask.name}
             action={selectAllTextOnFocus}
             class="text-input"
             type="text" 
-            id="todo-0" 
-            name="todo-0"
+            id={taskNameString}
+            name={taskNameString}
             placeholder="Scoop the litterbox "
             autocomplete="off"
           />
@@ -157,9 +157,9 @@
 
         <!-- Repeats Weekly -->
         <div class="f-col gap-xs">
-          <label for="new-task-times-per-week">Will this task repeat weekly?</label>
+          <label for={repeatsWeeklyNameString}>Will this task repeat weekly?</label>
           <ToggleButton 
-            name="new-task-repeats-weekly"
+            name={repeatsWeeklyNameString}
             option1="No"
             option2="Yes"
             on:onToggleButtonChange={e => updateRepeatsWeeky(e.detail)}
@@ -172,50 +172,49 @@
           <!-- Bind each input to a group -->
           <fieldset class="f-row gap-xs f-c-s">
             <DayOfWeekSelector 
-              name="new-task-target-day"
+              name={targetDayNameString}
               dayOfWeekValue="sunday"  
               type="radio" 
               on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
             <DayOfWeekSelector 
-              name="new-task-target-day"
+              name={targetDayNameString}
               dayOfWeekValue="monday"  
               type="radio"
               on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
             <DayOfWeekSelector 
-              name="new-task-target-day"
+              name={targetDayNameString}
               dayOfWeekValue="tuesday"  
               type="radio"
               on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
             <DayOfWeekSelector 
-              name="new-task-target-day"
+              name={targetDayNameString}
               dayOfWeekValue="wednesday"  
               type="radio"
               on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
             <DayOfWeekSelector 
-              name="new-task-target-day"
+              name={targetDayNameString}
               dayOfWeekValue="thursday"  
               type="radio"
               on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
             <DayOfWeekSelector 
-              name="new-task-target-day"
+              name={targetDayNameString}
               dayOfWeekValue="friday"  
               type="radio"
               on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
             <DayOfWeekSelector 
-              name="new-task-target-day"
+              name={targetDayNameString}
               dayOfWeekValue="saturday"  
               type="radio"
               on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
             <div>
               <input 
                 type="radio"
-                name="new-task-target-day"
+                name={targetDayNameString}
                 id="no-target-day"
                 value="no-target-day"
                 on:change={e => updateTargetDay('any')}/>
               <label for="no-target-day">None</label>
             </div>
-              
           </fieldset>
         </div>
 
@@ -224,9 +223,9 @@
           <input 
             bind:value={addAnother}
             type="checkbox"
-            id="add-another" 
-            name="add-another"/>
-          <label for="add-another">Add another task</label>
+            id={addAnotherNameString}
+            name={addAnotherNameString}/>
+          <label for={addAnotherNameString}>Add another task</label>
         </div>
           
         <!-- Submit the form with the button -->

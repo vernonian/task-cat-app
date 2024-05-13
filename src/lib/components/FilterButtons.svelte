@@ -20,7 +20,6 @@
 	 * @param index
 	*/
 	function updateActive(index:number) {
-		console.log("in updateActive()");
 		// Reset all to false
 		for (let i = 0; i<isActive.length; i++) {
 			isActive[i] = false;

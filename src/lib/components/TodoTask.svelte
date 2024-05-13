@@ -19,7 +19,7 @@
 
 	// Search the daysOfWeek array to find index matching prop.dayTarget - Used to render day marker
 	let dayIndex: number = daysOfTheWeek.findIndex((obj) => obj.day === todo.dayTarget);
-	// console.log(dayIndex);
+
 
 	function update(updatedTask: any) {
 		todo = { ...todo, ...updatedTask }; // "spreads" modifications on to todo
@@ -42,12 +42,10 @@
 		// Leave edit mode
 		editing = false;
 		console.log('Task name edit canceled');
-		console.log('todo.name: ' + todo.name + ' | name: ' + name);
 	}
 
 	// User saves changed in editing mode, so the todoTask must be updated
 	function onSave() {
-		console.log('blur');
 		// Update props
 		update({ name: name });
 

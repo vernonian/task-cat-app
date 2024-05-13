@@ -15,18 +15,15 @@
 
   // Variables
   let currentFilter:string = 'all'; // bound to <FilterButtons>
-  let newTodoName:string = '';
-  let newTodoId:number;
 
   // Reactive variables
-  $: newTodoId = todos.length ? Math.max(...todos.map( (t) => t.id + 1)) : 1;
+  $: todosLength = todos.length;
+  $: console.log("todosLength: " + todosLength.toString());
 
   // Component DOM References
   let todosStatus:SvelteComponent;
 
   // Functions
-
- 
 
   /* Updates a todo object in the todos array by a matching index */
   function updateTodoItem(todo:TodoTaskType) {
@@ -46,6 +43,7 @@
   /* Adds a todo item to the todos array. */
   function addTodoItem(newTodoTask:TodoTaskType) {   
     let itemToAdd:TodoTaskType = newTodoTask;
+    // console.log(itemToAdd);
 
     // Add the new TodoTaskType item to the todos array
     todos = [...todos, itemToAdd];
@@ -101,7 +99,7 @@
 
         <!-- NewTodoForm -->
         <NewTodoFrom 
-          todosLength={newTodoId}
+          todosLength={todosLength}
           on:addTodoTask={ (e) => addTodoItem(e.detail) }
         />
         

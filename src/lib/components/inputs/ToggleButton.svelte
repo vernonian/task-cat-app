@@ -24,7 +24,6 @@
   // Emit custom event and pass in the selected value
   function onChange() {
     dispatch('onToggleButtonChange', selected);
-    console.log(selected);
   }
 </script>
 
