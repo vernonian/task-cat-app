@@ -71,6 +71,7 @@
     color: var(--interactive-5);
     transition: color 0.2s, background-color 0.2s;
     cursor: pointer;
+    display: block;
   }
 
   .toggle-button:has(input:checked) > label {

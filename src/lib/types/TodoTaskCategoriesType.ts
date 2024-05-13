@@ -1,1 +1,1 @@
-export type TodoTaskCategoriesType = 'house' | 'body' | 'mind' | 'spirit' | 'social' | 'misc';
+export type TodoTaskCategoriesType = 'misc' | 'house' | 'body' | 'mind' | 'spirit' | 'social';

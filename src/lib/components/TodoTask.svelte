@@ -231,6 +231,10 @@
     transition: var(--transi-color);
 	}
 
+	.times-per-week {
+		display: none;
+	}
+
   /* Weekly repetition indicator */
 	.repeats-weekly {
 		width: 12px;

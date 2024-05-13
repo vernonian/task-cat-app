@@ -97,11 +97,11 @@
         <div class="f-col gap-s">
           <h2 class="heading-2">The List</h2>
         </div>
+          <!-- autofocus={true} -->
 
         <!-- NewTodoForm -->
         <NewTodoFrom 
           todosLength={newTodoId}
-          autofocus={true}
           on:addTodoTask={ (e) => addTodoItem(e.detail) }
         />
         

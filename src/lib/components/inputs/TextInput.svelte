@@ -18,6 +18,19 @@
     border-radius: var(--xs);
     font-size: var(--fontsize-body-1);
     line-height: 1;
+
+    &:hover {
+      border-color: var(--interactive-3);
+    }
+
+    &:active, &:focus {
+      border-color: var(--interactive-5);
+    }
+
+    &:focus {
+      outline: dashed 2px var(--interactive-5);
+      outline-offset: 1px;
+    }
   }
 
   input::placeholder {

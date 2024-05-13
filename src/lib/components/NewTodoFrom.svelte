@@ -15,6 +15,7 @@
 	import TextInput from "./inputs/TextInput.svelte";
 	import DayOfWeekSelector from "./inputs/DayOfWeekSelector.svelte";
 	import ToggleButton from "./inputs/ToggleButton.svelte";
+	import SelectList from "./inputs/SelectList.svelte";
   
   // Props
   export let todosLength:number;  // Used ot generate newTodoTask's id
@@ -39,8 +40,11 @@
   let categoryInput:any; //Reference to select input element
 
   // Form variables
+  let newTodoForm:HTMLFormElement;
   let selectedCategoryValue:TodoTaskCategoriesType;
   let addAnother:boolean = false; // Used to control modal behavior after form submit
+  let categoryNameString:string = 'category';
+  
 
   function resetNewTodoTask() {
     newTodoTask = {
@@ -89,18 +93,19 @@
   /* Setter functions for creating new todo task object */
 
   // Updates newTodoTask's category property based on event listener
-  function updateCategory(x:TodoTaskCategoriesType) {
-    newTodoTask.category = x;
+  function updateCategory(category:TodoTaskCategoriesType) {
+    newTodoTask.category = category;
+    console.log(newTodoTask.category);
   }
 
   // Updates newTodoTask's repeatsWeekly property based on event listener
-  function updateRepeatsWeeky(x:boolean) {
-    newTodoTask.repeatsWeekly = x;
+  function updateRepeatsWeeky(doesRepeat:boolean) {
+    newTodoTask.repeatsWeekly = doesRepeat;
   }
 
   // Updates targetDayValue based on component event listener
-  function updateTargetDay(x:DaysType) {
-    newTodoTask.dayTarget = x;
+  function updateTargetDay(targetDay:DaysType) {
+    newTodoTask.dayTarget = targetDay;
   }
 
   // $: () => { console.log("newTodoTask:"); console.log(newTodoTask)}
@@ -116,120 +121,122 @@
   Add Task Item</Button>
   <Modal modalId="new-task-modal" bind:showModal>
     <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
-    <section>
+    <section class="f-col gap-l">
       <h2 class="heading-2">Create New Task</h2>
       <form
+        bind:this={newTodoForm}
         on:submit|preventDefault={addTodoTask}
         on:keydown={(e) => e.key === 'Escape' && onCancel()}
-        class="f-col"
+        class="f-col gap-l"
       >
-      <div class="f-col">
-        <label for="todo-0">What's the task?</label>
-        <TextInput bind:value={newTodoTask.name}
-          action={selectAllTextOnFocus}
-          class="text-input"
-          type="text" 
-          id="todo-0" 
-          name="todo-0"
-          placeholder="Scoop the litterbox "
-          autocomplete="off"
-        />
-      </div>
 
-      <!-- Category -->
-      <div class="f-col">
-        <label for="category">What's this task's category?</label>
-        <select 
-          on:change={e => updateCategory(categoryInput.value)}
-          bind:this={categoryInput} 
-          name="category" 
-          id="category"
-          required>
-          {#each CATEGORIES as category}
-            <option value={category}>{category[0].toUpperCase() + category.substring(1)}</option>
-          {/each}
-        </select>
-      </div>
+        <!-- Task Name -->
+        <div class="f-col gap-xs">
+          <label for="todo-0">What's the task?</label>
+          <TextInput bind:value={newTodoTask.name}
+            action={selectAllTextOnFocus}
+            class="text-input"
+            type="text" 
+            id="todo-0" 
+            name="todo-0"
+            placeholder="Scoop the litterbox "
+            autocomplete="off"
+          />
+        </div>
 
-      <!-- Repeats Weekly -->
-      <div class="f-col">
-        <label for="new-task-times-per-week">Will this task repeat weekly?</label>
-        <ToggleButton 
-          name="new-task-repeats-weekly"
-          option1="No"
-          option2="Yes"
-          on:onToggleButtonChange={e => updateRepeatsWeeky(e.detail)}
-        />
-      </div>
+        <!-- Category -->
+        <div class="f-col gap-xs">
+          <label for={categoryNameString}>What's this task's category?</label>
+          <SelectList 
+            name={categoryNameString}
+            required={true}
+            on:selectListChange={e => updateCategory(e.detail)}
+            selectListData={CATEGORIES}
+          />
+        </div>
 
-      <!-- Target Day -->
-      <div class="f-col">
-        <label for="category">What day do you plan to complete this task?</label>
-        <!-- Bind each input to a group -->
-        <fieldset class="f-row gap-xs f-c-s">
-          <DayOfWeekSelector 
-            name="new-task-target-day"
-            dayOfWeekValue="sunday"  
-            type="radio" 
-            on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
-          <DayOfWeekSelector 
-            name="new-task-target-day"
-            dayOfWeekValue="monday"  
-            type="radio"
-            on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
-          <DayOfWeekSelector 
-            name="new-task-target-day"
-            dayOfWeekValue="tuesday"  
-            type="radio"
-            on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
-          <DayOfWeekSelector 
-            name="new-task-target-day"
-            dayOfWeekValue="wednesday"  
-            type="radio"
-            on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
-          <DayOfWeekSelector 
-            name="new-task-target-day"
-            dayOfWeekValue="thursday"  
-            type="radio"
-            on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
-          <DayOfWeekSelector 
-            name="new-task-target-day"
-            dayOfWeekValue="friday"  
-            type="radio"
-            on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
-          <DayOfWeekSelector 
-            name="new-task-target-day"
-            dayOfWeekValue="saturday"  
-            type="radio"
-            on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
-          <div>
-            <input 
-              type="radio"
+        <!-- Repeats Weekly -->
+        <div class="f-col gap-xs">
+          <label for="new-task-times-per-week">Will this task repeat weekly?</label>
+          <ToggleButton 
+            name="new-task-repeats-weekly"
+            option1="No"
+            option2="Yes"
+            on:onToggleButtonChange={e => updateRepeatsWeeky(e.detail)}
+          />
+        </div>
+
+        <!-- Target Day -->
+        <div class="f-col gap-xs">
+          <label for="category">What day do you plan to complete this task?</label>
+          <!-- Bind each input to a group -->
+          <fieldset class="f-row gap-xs f-c-s">
+            <DayOfWeekSelector 
               name="new-task-target-day"
-              id="no-target-day"
-              value="no-target-day"
-              on:change={e => updateTargetDay('any')}/>
-            <label for="no-target-day">None</label>
-          </div>
-            
-        </fieldset>
-      </div>
+              dayOfWeekValue="sunday"  
+              type="radio" 
+              on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
+            <DayOfWeekSelector 
+              name="new-task-target-day"
+              dayOfWeekValue="monday"  
+              type="radio"
+              on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
+            <DayOfWeekSelector 
+              name="new-task-target-day"
+              dayOfWeekValue="tuesday"  
+              type="radio"
+              on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
+            <DayOfWeekSelector 
+              name="new-task-target-day"
+              dayOfWeekValue="wednesday"  
+              type="radio"
+              on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
+            <DayOfWeekSelector 
+              name="new-task-target-day"
+              dayOfWeekValue="thursday"  
+              type="radio"
+              on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
+            <DayOfWeekSelector 
+              name="new-task-target-day"
+              dayOfWeekValue="friday"  
+              type="radio"
+              on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
+            <DayOfWeekSelector 
+              name="new-task-target-day"
+              dayOfWeekValue="saturday"  
+              type="radio"
+              on:dayOfWeekChange={e => updateTargetDay(e.detail)}/>
+            <div>
+              <input 
+                type="radio"
+                name="new-task-target-day"
+                id="no-target-day"
+                value="no-target-day"
+                on:change={e => updateTargetDay('any')}/>
+              <label for="no-target-day">None</label>
+            </div>
+              
+          </fieldset>
+        </div>
 
-      <!-- Add another task after form submit? (keeps modal open) -->
-      <div class="f-row gap-s">
-        <input 
-          bind:value={addAnother}
-          type="checkbox"
-          id="add-another" 
-          name="add-another"/>
-        <label for="add-another">Add another task</label>
-       
-      </div>
-        
-        <button 
+        <!-- Add another task after form submit? (keeps modal open) -->
+        <div class="f-row gap-xs">
+          <input 
+            bind:value={addAnother}
+            type="checkbox"
+            id="add-another" 
+            name="add-another"/>
+          <label for="add-another">Add another task</label>
+        </div>
+          
+        <!-- Submit the form with the button -->
+        <Button 
+          type="submit"
           disabled={!newTodoTask.name}
-          type="submit">Add</button> 
+          usage="primary"
+          id="new-todo-submit"
+          onClick={ () => newTodoForm.requestSubmit() }
+          >Add</Button>
     </form>
   </section>
-    
 </Modal>
