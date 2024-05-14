@@ -31,6 +31,14 @@
       dialog.close();
     }, modalAnimationDuration);
   }
+
+  // Handle modal closing if escape key is pushed
+  function handleEscapeKeyPress(e:any) {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      closeModalHandler();
+    }
+  }
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
@@ -39,6 +47,7 @@
   id={modalId}
   bind:this={dialog}
   on:click={closeModalHandler}
+  on:keydown={handleEscapeKeyPress}
   >
   <!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div class="f-col f-s-s" on:click|stopPropagation>
@@ -57,10 +66,9 @@
 <style>
   dialog {
     --modalAnimationDuration: 200ms;
-    padding: var(--l);
     max-width: var(--mw-l);
     width: max-content;
-
+    padding: 0px;
     border-radius: var(--s);
     box-shadow: 0 var(--xs) var(--s) 0px rgba(0,0,0,0.1);
     border:none;
@@ -93,5 +101,6 @@
   dialog :first-child {
     margin: 0 auto;
     width: max-content;
+    padding: var(--xl);
   }
 </style>

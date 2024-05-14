@@ -28,6 +28,8 @@
   let showModal:boolean = false;  // Setting this to true created bug where it doesn't know what dialog.close is
   $: nextTodoId = todosLength + 1;
 
+  $: console.log("showModal: " + showModal);
+
   // This property will be passed to parent component via event emission
   let newTodoTask:TodoTaskType = {
     id: nextTodoId,
@@ -66,7 +68,6 @@
 
   /**
    * TODO
-   * Bug -> id is not being updated as when form is submitted multiple times
    * reset all form elements to default when submitted
    *
    */
