@@ -20,15 +20,13 @@
   // Props
   export let todosLength:number;  // Used ot generate newTodoTask's id
 
-  
-
-  // export let autofocus:boolean = false;
-
   // Property to control modal, bound to Modal's prop
   let showModal:boolean = false;  // Setting this to true created bug where it doesn't know what dialog.close is
+  
+  // Id used to create the next todoTask item
+  $: console.log("todosLength (NewTodoForm): " + todosLength.toString());
   $: nextTodoId = todosLength + 1;
 
-  $: console.log("showModal: " + showModal);
 
   // This property will be passed to parent component via event emission
   let newTodoTask:TodoTaskType = {
@@ -52,7 +50,11 @@
   let targetDayNameString:string = 'new-task-target-day'; 
   let addAnotherNameString:string = 'add-another';
   
-
+  /**
+   * TODO
+   * reset all form elements to default when submitted
+   *
+   */
   function resetNewTodoTask() {
     newTodoTask = {
       id: nextTodoId,
@@ -66,12 +68,6 @@
     }
   }
 
-  /**
-   * TODO
-   * reset all form elements to default when submitted
-   *
-   */
-
   function addTodoTask() {
     dispatch('addTodoTask', newTodoTask);
     resetNewTodoTask();
@@ -79,16 +75,15 @@
     if (!addAnother) {
       showModal = false;
     }
-    // nameInputElement.focus(); // Give this element focus
+    else {
+      // Give the name input focus again
+       // nameInputElement.focus(); // Give this element focus
+    }
   }
 
   function onCancel() {
     resetNewTodoTask();
-    // nameInputElement.focus(); // Give this element focus
   }
- 
-  // If autofocus is true, focus the element
-  // onMount( () => autofocus && nameInputElement.focus() );
 
   // Open the modal by updating the showModal prop (bound to Modal component)
   function onOpenModal() {

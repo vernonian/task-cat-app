@@ -18,7 +18,7 @@
 
   // Reactive variables
   $: todosLength = todos.length;
-  $: console.log("todosLength: " + todosLength.toString());
+  $: console.log("todosLength (Todos): " + todosLength.toString());
 
   // Component DOM References
   let todosStatus:SvelteComponent;
