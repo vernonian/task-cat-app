@@ -7,9 +7,9 @@
   export let showModal:boolean = false; // Don't show modal by default
 
   // Scoped variables
-  let dialog:HTMLDialogElement; // Reference to dialog element
-  let modalVisible:boolean = false; // Boolean to control in-out animation
-  const modalAnimationDuration:number = 200;  // Animation duration (ms)
+  let dialog:HTMLDialogElement; // Reference to dialog element, will be 'undefined' until mounted
+  let modalVisible:boolean = showModal; // Boolean to control in-out animation
+  const modalAnimationDuration:number = 200;  // Animation duration (ms) 
 
   // Watch for change to show modal
   $: if (dialog && showModal) {
@@ -18,7 +18,7 @@
   }
 
   // Watch for change to close modal
-  $: if(!showModal) { closeModalHandler(); }
+  $: if(dialog && !showModal) { closeModalHandler(); }
 
   // Helper function to handle closing the modal
   function closeModalHandler() {

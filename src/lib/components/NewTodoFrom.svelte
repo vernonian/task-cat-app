@@ -25,7 +25,7 @@
   // export let autofocus:boolean = false;
 
   // Property to control modal, bound to Modal's prop
-  $: showModal = true;
+  let showModal:boolean = false;  // Setting this to true created bug where it doesn't know what dialog.close is
   $: nextTodoId = todosLength + 1;
 
   // This property will be passed to parent component via event emission
@@ -119,9 +119,9 @@
   onClick={onOpenModal}
 >
   Add Task Item</Button>
-  <Modal modalId="new-task-modal" bind:showModal>
-    <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
-    <section class="f-col gap-l">
+<Modal modalId="new-task-modal" bind:showModal>
+  <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+  <section class="f-col gap-l">
       <h2 class="heading-2">Create New Task</h2>
       <form
         bind:this={newTodoForm}
