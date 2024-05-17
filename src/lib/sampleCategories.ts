@@ -1,3 +1,3 @@
-const CATEGORIES:string[] = ['misc','house','body','mind','hobbies','social'];
+const CATEGORIES:string[] = ['errands','body','mind','social','hobbies','misc'];
 
 export default CATEGORIES;

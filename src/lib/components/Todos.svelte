@@ -91,9 +91,8 @@
 
     <div class="main-grid">
       <!-- Col 1 -->
-      <div class="f-col todo-extras">
-
-        <div class="f-col gap-s">
+      <div class="todo-extras">
+        <div class="sticky f-col gap-s">
           <!-- NewTodoForm -->
           <NewTodoFrom 
             todosLength={todosLength}
@@ -184,13 +183,14 @@
       grid-template-columns: 2fr 1fr;
       grid-template-areas: 
       'list extras'
-      'list about';
+      'about extras';
       gap: var(--l);
     }
 
-    .todo-list {
-      border-right: solid 1px var(--neutral-3);
-      padding-right: var(--l);
+    .sticky {
+      position: sticky;
+      top: var(--m);
+      width: 100%;
     }
   }
 
@@ -200,10 +200,6 @@
       grid-template-columns: 1fr 1.75fr 1fr;
       grid-template-areas: 
       'extras list about';
-    }
-
-    .todo-list {
-      padding-right: var(--l);
     }
   }
 

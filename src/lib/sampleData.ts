@@ -8,8 +8,7 @@ const sampleData:TodoTaskType[] = [
     repeatsWeekly: true,
     timesPerWeek: 1,
     tag: 'default',
-    category: 'house',
-    dayTarget: 'monday'
+    category: 'errands',
   },
   { 
     id: 2,
@@ -18,7 +17,7 @@ const sampleData:TodoTaskType[] = [
     repeatsWeekly: true,
     timesPerWeek: 1,
     tag: 'default',
-    category: 'house'
+    category: 'errands'
   },
   { 
     id: 3,
@@ -32,7 +31,7 @@ const sampleData:TodoTaskType[] = [
   },
   { 
     id: 4,
-    name: 'Hang out with W',
+    name: 'Hang out with Will',
     completed: false,
     repeatsWeekly: true,
     timesPerWeek: 1,
@@ -41,16 +40,27 @@ const sampleData:TodoTaskType[] = [
   },
   { 
     id: 5,
-    name: 'Hang out with X',
+    name: 'Virtual game night with TTTC',
     repeatsWeekly: true,
-    completed: false,
+    completed: true,
     timesPerWeek: 1,
     tag: 'default',
     category: 'social',
+    dayTarget: 'monday'
   },
   { 
     id: 6,
-    name: 'Hang out with Y',
+    name: 'Coffee with Henrietta',
+    completed: false,
+    repeatsWeekly: false,
+    timesPerWeek: 1,
+    tag: 'default',
+    category: 'social',
+    dayTarget: 'saturday'
+  },
+  { 
+    id: 7,
+    name: 'Dinner with Jane',
     completed: false,
     repeatsWeekly: true,
     timesPerWeek: 1,
@@ -58,20 +68,10 @@ const sampleData:TodoTaskType[] = [
     category: 'social',
     dayTarget: 'tuesday'
   },
-  { 
-    id: 7,
-    name: 'Hang out with Z',
-    completed: false,
-    repeatsWeekly: true,
-    timesPerWeek: 1,
-    tag: 'default',
-    category: 'social',
-    dayTarget: 'friday'
-  },
   {
     id: 8,
     name: 'Yoga',
-    completed: false,
+    completed: true,
     repeatsWeekly: true,
     timesPerWeek: 1,
     tag: 'default',
@@ -88,22 +88,97 @@ const sampleData:TodoTaskType[] = [
   },
   {
     id: 10,
-    name: 'Climb',
+    name: 'Climb with the squad',
     completed: false,
     repeatsWeekly: true,
     timesPerWeek: 1,
     tag: 'default',
     category: 'body',
+    dayTarget: 'tuesday'
   },
   {
     id: 11,
-    name: 'Climb',
+    name: 'Gym',
     completed: false,
+    repeatsWeekly: true,
+    timesPerWeek: 2,
+    tag: 'default',
+    category: 'body',
+    dayTarget: 'thursday'
+  },
+  { 
+    id: 12,
+    name: 'Marie\'s baby shower',
+    completed: false,
+    repeatsWeekly: false,
+    timesPerWeek: 1,
+    tag: 'default',
+    category: 'social',
+    dayTarget: 'saturday'
+  },
+  { 
+    id: 13,
+    name: 'Play video games',
+    completed: false,
+    repeatsWeekly: false,
+    timesPerWeek: 1,
+    tag: 'default',
+    category: 'hobbies',
+  },
+  { 
+    id: 14,
+    name: 'Cook',
+    completed: false,
+    repeatsWeekly: true,
+    timesPerWeek: 4,
+    tag: 'default',
+    category: 'hobbies',
+  },
+  { 
+    id: 15,
+    name: 'Read',
+    completed: true,
     repeatsWeekly: true,
     timesPerWeek: 1,
     tag: 'default',
-    category: 'body',
-  }
+    category: 'hobbies',
+  },
+  { 
+    id: 16,
+    name: 'Meditate',
+    completed: true,
+    repeatsWeekly: true,
+    timesPerWeek: 1,
+    tag: 'default',
+    category: 'mind',
+  },
+  { 
+    id: 16,
+    name: 'Sweep floors',
+    completed: true,
+    repeatsWeekly: true,
+    timesPerWeek: 1,
+    tag: 'default',
+    category: 'errands',
+  },
+  { 
+    id: 17,
+    name: 'Clean bathroom',
+    completed: true,
+    repeatsWeekly: true,
+    timesPerWeek: 1,
+    tag: 'default',
+    category: 'mind',
+  },
+  { 
+    id: 18,
+    name: 'Drop of ballot',
+    completed: true,
+    repeatsWeekly: false,
+    timesPerWeek: 1,
+    tag: 'default',
+    category: 'errands',
+  },
 ]
 
 export default sampleData;

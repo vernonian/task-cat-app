@@ -16,7 +16,7 @@
   .nav {
     width: 100%;
     padding: var(--s);
-    background-color: var(--primary-4);
+    background-color: var(--primary-3);
     color: var(--white);
   }
 </style>
