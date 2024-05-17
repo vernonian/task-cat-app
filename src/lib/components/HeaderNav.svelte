@@ -6,7 +6,8 @@
   <nav class="nav">
     <section class="content-wrap f-row f-c-c gap-s">
       <CatIcon fillColor="white" />
-      <p>Welcome to Task Kat, let's do some tasks!</p>
+      <p>Done or undone, these tasks don’t sum up your self-worth!</p>
+      <CatIcon fillColor="white" />
     </section>
   </nav>
 </header>

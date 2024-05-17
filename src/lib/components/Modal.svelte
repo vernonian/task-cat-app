@@ -72,6 +72,14 @@
     border-radius: var(--s);
     box-shadow: 0 var(--xs) var(--s) 0px rgba(0,0,0,0.1);
     border:none;
+    /* Hide scroll bars */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  /* Hide scroll bars */
+  dialog::-webkit-scrollbar {
+    display: none;
   }
 
   dialog::backdrop {
