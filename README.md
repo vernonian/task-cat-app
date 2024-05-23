@@ -1,38 +1,15 @@
-# create-svelte
+# 😸 Task Kat 😸
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+## What is Task Kat?
 
-## Creating a project
+Task Kat is a minimalist todo list to help keep track of all the tasks that we have going on in our lives. Design artefacts have been made in Figma and translated into a functioning UI using Svelte. 
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Objective
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+The primary objective for this project is to gain a deeper understanding of composing UIs with SvelteKit by creating a simple todo list app where users can add, edit, and delete their weekly tasks. Version one of this task list app will be focused on UI and functionality, meaning that the data used in the list will be localized to my machine. 
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+In the future I’d like to extend the functionality and learn how to handle data from an API once the core features and UI are all working.
 
-## Developing
+## More
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+For full documenation, visit my website.
