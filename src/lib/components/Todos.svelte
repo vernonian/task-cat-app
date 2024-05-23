@@ -10,6 +10,7 @@
 	import DashboardHeader from "./DashboardHeader.svelte";
   import CATEGORIES from "$lib/sampleCategories";
 	import WeekDates from "./WeekDates.svelte";
+	import AboutTaskKat from "./AboutTaskKat.svelte";
 
   // Props
   export let todos:TodoTaskType[];
@@ -74,14 +75,7 @@
       todos[i].completed = completed;
     });
   }
-
-  function removeCompletedTasks() {
-    // Updated the todo array with only items that are not complete
-    todos = todos.filter( (t) => {
-      return !t.completed;
-    });
-  }
-
+   
   $: console.log(todos);
 </script>
 
@@ -90,7 +84,7 @@
   <section class="content-wrap f-col gap-l">
 
     <div class="main-grid">
-      <!-- Col 1 -->
+      <!-- Col 1 - List actions -->
       <div class="todo-extras">
         <div class="sticky f-col gap-s">
           <!-- NewTodoForm -->
@@ -108,13 +102,12 @@
           <!-- MoreActions -->
           <MoreActions 
             todos={todos}
-            on:checkAll={ (e) => {checkAllTasks(e.detail)} }
-            on:removeCompleted={removeCompletedTasks}
+            on:setAllStatus={ e => checkAllTasks(e.detail) }
           />
         </div>
       </div>        
 
-      <!-- Col 2 -->
+      <!-- Col 2 - The list -->
       <div class="f-col todo-list">
         <div class="f-col gap-s">
           <h2 class="heading-2">Tasks for <span><WeekDates/></span></h2>
@@ -135,22 +128,9 @@
         {/each}
       </div>
 
-      <!-- Col 3 todo: componentize this -->
-      <div class="f-col gap-s todo-about">
-        <h3 class="heading-3">About 😸</h3>      
-        <details class="dropdown">
-          <summary class="subheading-2">How to use Task Kat</summary>
-          <div class="f-col details-content">
-            <p>Add a task by giving it an actionable or identifiable name.</p>
-            <p>You can give it optional organizational labels:</p>
-            <ul class="list-wrap">
-              <li>a target day of completion</li>
-              <li>a number of times you plan to do the task</li>
-              <li>a task category type</li>
-              <li>a flag if the task is to repeat every week</li>
-            </ul>
-            <p>Clicking the 'Reset All' button will change all tasks to 'undone' and remove all tasks marked as nont repeating weekly.</p>
-          </div>
+      <!-- Col 3 - About -->
+      <div class="todo-about">
+        <AboutTaskKat/>
       </div>
     </div>
   </section>
@@ -201,14 +181,5 @@
       grid-template-areas: 
       'extras list about';
     }
-  }
-
-  .details-content {
-    padding: var(--m) var(--xs);
-  }
-
-  .list-wrap {
-    list-style: initial;
-    padding-left: var(--m);
   }
 </style>

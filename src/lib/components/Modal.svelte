@@ -109,6 +109,6 @@
   dialog :first-child {
     margin: 0 auto;
     width: max-content;
-    padding: var(--xl);
+    padding: var(--l);
   }
 </style>

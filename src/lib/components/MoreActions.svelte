@@ -14,13 +14,9 @@
   $: completedTodoTasks = todos.filter( (t) => t.completed === true ).length;
 
   // Functions
-  const checkAll = () => {
-    dispatch('checkAll', completed);
-    completed = !completed;
-  }
-
-  const removeCompleted = () => {
-    dispatch('removeCompleted');
+  function setAllTaskStatus(b:boolean) {
+    completed = b;
+    dispatch('setAllStatus', completed);
   }
 </script>
 
@@ -31,16 +27,16 @@
       id="toggle-all-button"
       type="button"
       usage="default"
-      onClick={checkAll}
-      disabled={todos.length === 0}
-    >{completed? 'Check' : 'Uncheck'} All</Button>
+      onClick={() => setAllTaskStatus(true)}
+      disabled={todos.length === completedTodoTasks}
+    >Check All</Button>
 
     <Button 
-      id="remove-completed-button"
+      id="reset-all-button"
       type="button"
       usage="default"
-      onClick={removeCompleted}
+      onClick={() => setAllTaskStatus(false)}
       disabled={completedTodoTasks === 0}
-    >Remove Completed</Button>
+    >Reset All Tasks</Button>
   </div>
 </section>
